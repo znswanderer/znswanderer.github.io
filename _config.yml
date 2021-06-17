@@ -36,6 +36,8 @@ kramdown:
     preview:         true
     preview_as_code: false
 
+show_excerpts: true
+excerpt_separator: <!--more-->  # you can specify your own separator, of course.
 
 author:
   #name: Nina Scheffler
@@ -46,7 +48,6 @@ minima:
 #    twitter: en_znswanderer
     github:  znswanderer
 
-show_excerpts: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.
