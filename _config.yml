@@ -41,10 +41,10 @@ author:
   #name: Nina Scheffler
   email: "znswanderer@icloud.com"  
 
-# minima:
-#   social_links:
-#     twitter: en_znswanderer
-#     github:  znswanderer
+minima:
+  social_links:
+#    twitter: en_znswanderer
+    github:  znswanderer
 
 show_excerpts: true
 
