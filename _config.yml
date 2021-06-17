@@ -31,6 +31,12 @@ remote_theme: jekyll/minima
 plugins:
   - jekyll-feed
 
+kramdown:
+  math_engine_opts:
+    preview:         true
+    preview_as_code: true
+
+
 author:
   #name: Nina Scheffler
   email: "znswanderer@icloud.com"  
