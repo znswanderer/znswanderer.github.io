@@ -22,8 +22,8 @@ title: Wald aus Zahlen
 email: znswanderer@icloud.com
 description: #>- # this means to ignore newlines until "baseurl:"
   A blog about physics, programming and math.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+#baseurl: "" # the subpath of your site, e.g. /blog
+#url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 #theme: minima
@@ -34,7 +34,7 @@ plugins:
 kramdown:
   math_engine_opts:
     preview:         true
-    preview_as_code: true
+    preview_as_code: false
 
 
 author:
