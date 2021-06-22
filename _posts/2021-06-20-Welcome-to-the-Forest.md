@@ -3,13 +3,15 @@ layout: post
 title:  "Welcome to the Forest!"
 date:   2021-06-20
 categories: blog
-tags:   [Meta, Sunday Afternoon Delight]
+tags:   [Meta]
 ---
 
 
 This is the beginning of a journey through the forest made from numbers.
 
 <!--more-->
+
+![wald]({{site.url}}/assets/images/wald.jpeg)
 
 [Numbers][math_wigner] seem to be the basis of reality, almost as if reality would consist only of mathematical objects and their relationships among each other. But as the saying goes: often you can't see the forest for the trees! In the same way, it is easy to get lost in mathematics.
 
