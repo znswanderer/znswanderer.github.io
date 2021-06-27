@@ -33,7 +33,7 @@ $$
 \hat{H} = \frac{1}{2m} \hat{p}^2
 $$
 
-With $\hat p = i \hbar \frac{\partial}{\partial x}$ in position space, we get for the hamiltonian:
+With $$\hat p = i \hbar \frac{\partial}{\partial x}$$ in position space, we get for the hamiltonian:
 
 $$
 \hat{H} = -\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2}
@@ -48,13 +48,13 @@ $$
     i \hbar \frac{\partial}{\partial t} \psi(x, t) = \hat{H} \psi(x,t)
 $$
 
-We make the *ansatz* of separating time and space dependency in $\psi$:
+We make the *ansatz* of separating time and space dependency in $$\psi$$:
 
 $$
 \psi(x, t) = \psi(t) \, \psi(x)
 $$
 
-this way, because $\hat{H}$ does not effect time, we can first search for
+this way, because $$\hat{H}$$ does not effect time, we can first search for
 solutions of the time-independent Schrödinger Equation:
 
 $$
@@ -62,7 +62,7 @@ E \psi(x) = \hat{H} \psi(x) = -\frac{\hbar^2}{2m} \frac{\partial^2 \psi(x)}{\par
 $$
 
 The solutions are called *eigenfunctions* of the Hamilton operator and the
-energy values $E$ are the corresponding *eigenvalues*.
+energy values $$E$$ are the corresponding *eigenvalues*.
 
 For these eigenfunctions the overall solution to the time-dependent Schrödinger equation is:
 
