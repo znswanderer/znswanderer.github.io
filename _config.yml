@@ -39,8 +39,9 @@ kramdown:
 show_excerpts: true
 excerpt_separator: <!--more-->  # you can specify your own separator, of course.
 
+permalink: /:categories/:title/
+
 author:
-  #name: Nina Scheffler
   email: "znswanderer@icloud.com"  
 
 minima:

@@ -2,8 +2,8 @@
 layout: post
 title:  "Welcome to the Forest!"
 date:   2021-06-20
-categories: blog
-tags:   [Meta]
+categories: meta
+tags:   []
 ---
 
 

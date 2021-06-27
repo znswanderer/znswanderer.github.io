@@ -3,3 +3,7 @@ _site
 .jekyll-cache
 .jekyll-metadata
 vendor
+Todo.md
+_jupyter/.ipynb_checkpoints
+DRAFT*.*
+.DS_STORE*
