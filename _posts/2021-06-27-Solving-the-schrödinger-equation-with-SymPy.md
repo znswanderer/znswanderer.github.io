@@ -155,7 +155,7 @@ E * psi(x) == H_psi
 
 This time we do not get an error message, but it is still not, what we were looking for: 
 the double equal sign `==` is the *comparison* operator. Clearly the right-hand-side (RHS) 
-is in general not equal to the LHS. In fact we looking for the solutions $$\psi$$ for which the
+is in general not equal to the LHS. In fact we are looking for the solutions $$\psi$$ for which the
 equality will hold.
 
 The correct way in SymPy is to define an `Eq` object, like `Eq(RHS, LHS)`. Let's do just that:
