@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Solving the Schrödinger Equation with Sympy"
+title:  "Solving the Schrödinger Equation with SymPy"
 date:   2021-06-27
 categories: blog
 tags:   [physics, ODE, SymPy, Quantum Mechanics]
