@@ -33,7 +33,7 @@ $$
 \hat{H} = \frac{1}{2m} \hat{p}^2
 $$
 
-With $$\hat p = i \hbar \frac{\partial}{\partial x}$$ in position space, we get for the hamiltonian:
+With $$\hat p = -i \hbar \frac{\partial}{\partial x}$$ in position space, we get for the hamiltonian:
 
 $$
 \hat{H} = -\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2}
@@ -112,7 +112,7 @@ $$- \frac{\hbar^{2} \frac{d^{2}}{d x^{2}} \psi{\left(x \right)}}{2 m}$$
 
 
 
-Finally, the Schrödinger equation for the free particle is define as ... an equation! Who would have guessed?
+Finally, the Schrödinger equation for the free particle is defined as ... an equation! Who would have guessed?
 
 But how do we express the equation
 
