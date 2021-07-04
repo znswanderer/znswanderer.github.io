@@ -261,7 +261,7 @@ But how do we know that the spectrum is really discrete and there is not a
 $$\ket{\varepsilon}$$ state between $$\ket{0}$$ and $$\ket{1}$$?
 
 We assume that the energy of the harmonic oscillator, as in the classical case,
-can never be negative. However, if there were a $$\ket{\varepsilon}$$ with $$\varepsilon \in (0, 1)$$,
+can never be negative. However, if there were a state $$\ket{\varepsilon}$$ with $$\varepsilon \in (0, 1)$$,
 then one could generate the following state
 
 $$
@@ -278,7 +278,7 @@ $$
 \hat a \ket{0} = \sqrt{0} \ket{0 - 1} = 0
 $$
 
-no negative energy states can be generated, as reapeted application of $$\hat a$$ will just yield $$0$$:
+no negative energy states can be generated, as repeated application of $$\hat a$$ will just yield $$0$$:
 
 $$
 {\hat a}^{m} \ket{0} = {\hat a}^{m-1} \hat a \ket{0} = {\hat a}^{m-1} 0 = 0 
