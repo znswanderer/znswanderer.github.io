@@ -39,16 +39,16 @@ $$
 Here we are no longer looking for a solution curve for generalized coordinates $$x(t)$$ and $$p(t)$$, but rather
 the $$\hat x$$ and $$\hat p$$ are themselves operators acting on the quantum mechanical state $$\psi$$.
 
-Without going into details here now, in the following we consider the state $$\psi$$ in the spatial representation,
+Without going into details here now, in the following we consider the state $$\psi$$ in position space,
 where the wave function $$\psi(x,t)$$ is the complex probability amplitude to find a particle in a
-region $$[x, x+ dx]$$ at time $$t$$. In the spatial representation the two operators have 
+region $$[x, x+ dx]$$ at time $$t$$. In position space the two operators have 
 have the following form
 
 $$
 \hat p = - i \hbar \frac{\partial}{\partial x} \qquad \hat x = x
 $$
 
-As discussed in the [last posting][wald_1], we are primarily interested in solving 
+As discussed in the [last blog post][wald_1], we are primarily interested in solving 
 the time-independent Schrödinger equation and finally obtain:
 
 $$
@@ -121,8 +121,7 @@ Since SymPy fails at this ODE, I tried [Wolfram Alpha][wolfram_alpha] and here
 actually solutions are found in form of the [parabolic cylinder functions][parab], of which
 I have never heard of before. I have the feeling that if I follow this path I will
 quickly get lost in a lot of math and easily go off track.
-But a quick look on Wikipedia and I realize that
-these functions are related to the Hermitian polynomials, which are in fact the solutions 
+These functions are related to the Hermitian polynomials, which are in fact the solutions 
 of the quantum mechanical oscillator.
 
 [wolfram_alpha]: https://www.wolframalpha.com/input/?i=a+*+f+%3D+-f%27%27+%2B+x%5E2+*+f
@@ -134,8 +133,7 @@ So SymPy (at least in version 1.8) cannot solve this ODE analytically. But this 
 because in the end we expect anyway that most Schrödinger equations cannot be solved analytically
 and we will have to resort to numerical methods.
 
-But before we move on to numerics, we want to dwell for a short while in the golden realms of symbolic math
-and have a look at the well-known trick of the 
+But before we move on to numerics, I will take a look at the well-known trick of the 
 *ladder operator* method.
 
 First, again the Hamiltonian in its original form:
@@ -221,8 +219,7 @@ $$
 $$
 
 if the eigenvalues of $$\hat H$$ are not degenerate (which we assume here), the two vectors must be parallel,
-i.e. they must differ from each other only by a scalar factor
-from each other:
+i.e. they must differ from each other only by a scalar factor:
 
 $$
 \hat a^\dagger \ket{n} = \lambda_{n} \ket{n+1}
@@ -253,9 +250,9 @@ $$
 \hat H \ket{0} = E_0 \ket{0} = \hbar \omega \left( 0 + \frac{1}{2} \right) \ket{0}
 $$
 
-Starting from $$\ket{0}$$ then by means of $$\hat a^\dagger$$ all the states 
+Starting from $$\ket{0}$$ then by repeated application of $$\hat a^\dagger$$ all the states 
 $$\left\{ \ket{n} | \, n \in \mathbb{N} \right\}$$
-are generated and the energy spectrum is discrete.
+can be generated and the energy spectrum is discrete.
 
 But how do we know that the spectrum is really discrete and there is not a state
 $$\ket{\varepsilon}$$ between $$\ket{0}$$ and $$\ket{1}$$?
@@ -268,11 +265,11 @@ $$
 \hat a \ket{\varepsilon} = \sqrt{\varepsilon} \ket{\varepsilon - 1}
 $$
 
-which would then have a negative energy, and from there, by repeatedly applying $$\hat a$$, one
+which would have negative energy, and from there, by repeatedly applying $$\hat a$$, one
 could create arbitrarily deep negative energy states: the energy spectrum
 would not be limited downwards.
 
-In fact, then, $$n$$ in $$\ket{n}$$ must be a natural number, so that then, by using
+In fact, $$n$$ in $$\ket{n}$$ must be a natural number, such that by using
 
 $$
 \hat a \ket{0} = \sqrt{0} \ket{0 - 1} = 0
@@ -287,7 +284,7 @@ $$
 ## Generating the wave functions with SymPy
 
 Now, to represent the solutions as wavefunctions $$\psi(\tilde x)$$, we first consider the
-Ladder operators in the spatial space with the dimensionless coordinates:
+Ladder operators in position space with the dimensionless coordinates:
 
 $$
 \begin{aligned}
@@ -333,7 +330,7 @@ $$\psi{\left(\tilde{x} \right)} = C_{1} e^{- \frac{\tilde{x}^{2}}{2}}$$
 
 
 
-As expected, the solution is a Gaussian curve.
+As expected, the solution is a Gaussian.
 
 We arbitrarily set the constant $$C_1$$ to 1 and convert the SymPy function via `lambdify` to a format that numpy can handle for a plot:
 
@@ -359,15 +356,14 @@ plt.plot(xx, normalized(psi0_lmb(xx)));
 
 
 Even in the ground state, the state with the smallest total energy, the particle is not
-localized at $$x =0$$, but also has non-vanishing probabilities for 
+localized at $$x =0$$, but has non-vanishing probability for 
 $$|x| > 0$$. Thus, we have both potential and kinetic energy in the ground state:
 the particle *is not* resting in the ground state.
 
 This is of course an expression of [Heisenberg's uncertainty principle][helgoland], which 
-I don't want to go into here (maybe in a later post). But in the end
+I don't want to go into detail here (maybe in a later post). But in the end
 the ground energy of $$\frac{1}{2} \hbar \omega$$ is a consequence of the non 
-vanishing commutator $$[\hat x, \hat p] = i \hbar$$, as we saw above. And this
-is also the uncertainty relation in a nutshell.
+vanishing commutator $$[\hat x, \hat p] = i \hbar$$, as we saw above.
 
 [helgoland]: https://en.wikipedia.org/wiki/Uncertainty_principle
 
@@ -401,7 +397,7 @@ plt.legend(loc='upper right');
     
 
 
-One can see here very clearly that:
+One can see here clearly that:
 
 * The wave functions are alternately symmetric $$\psi(\tilde x) = \psi(- \tilde x)$$ or
   antisymmetric $$\psi(\tilde x) = -\psi(- \tilde x)$$ with respect to the origin.
