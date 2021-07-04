@@ -3,7 +3,7 @@ layout: post
 title:  "Solving the Schrödinger Equation with SymPy"
 date:   2021-06-27
 categories: blog
-tags:   [physics, ODE, SymPy, Quantum Mechanics]
+tags:   [Physics, ODE, SymPy, Quantum Mechanics, Free Particle, Particle in a Box]
 ---
 
 
