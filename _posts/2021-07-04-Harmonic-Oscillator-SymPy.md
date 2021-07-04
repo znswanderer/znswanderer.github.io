@@ -163,6 +163,7 @@ $$[\hat x, \hat p] = \hat x \hat p - \hat p \hat x = i \hbar$$, so
 $$
 \hat H = \hbar \omega \left( \hat a^\dagger \hat a + \frac{1}{2} \right)
 $$
+
 (This can be checked by simply taking the definition of $$\hat a$$ and $$\hat a^\dagger$$ from above
 and using the commutator for $$\hat x$$ and $$\hat p$$).
 
@@ -276,6 +277,7 @@ In fact, then, $$n$$ in $$\ket{n}$$ must be a natural number, so that then, by u
 $$
 \hat a \ket{0} = \sqrt{0} \ket{0 - 1} = 0
 $$
+
 no negative energy states can be generated, as reapeted application of $$\hat a$$ will just yield $$0$$:
 
 $$
