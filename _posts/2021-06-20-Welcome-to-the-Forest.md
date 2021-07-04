@@ -12,7 +12,7 @@ This is the beginning of a journey through the forest made from numbers.
 <!--more-->
 
 {: style="text-align:center"}
-![wald]({{site.url}}/assets/images/wald.jpeg){: width="80%"}
+![wald]({{site.url}}/assets/images/wald.jpeg){: width="90%"}
 
 [Numbers][math_wigner] seem to be the basis of reality, almost as if reality would consist only of mathematical objects and their relationships among each other. But as the saying goes: often you can't see the forest for the trees! In the same way, it is easy to get lost in mathematics.
 
