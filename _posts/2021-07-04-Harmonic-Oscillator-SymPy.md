@@ -257,8 +257,8 @@ Starting from $$\ket{0}$$ then by means of $$\hat a^\dagger$$ all the states
 $$\left\{ \ket{n} | \, n \in \mathbb{N} \right\}$$
 are generated and the energy spectrum is discrete.
 
-But how do we know that the spectrum is really discrete and there is not a 
-$$\ket{\varepsilon}$$ state between $$\ket{0}$$ and $$\ket{1}$$?
+But how do we know that the spectrum is really discrete and there is not a state
+$$\ket{\varepsilon}$$ between $$\ket{0}$$ and $$\ket{1}$$?
 
 We assume that the energy of the harmonic oscillator, as in the classical case,
 can never be negative. However, if there were a state $$\ket{\varepsilon}$$ with $$\varepsilon \in (0, 1)$$,
