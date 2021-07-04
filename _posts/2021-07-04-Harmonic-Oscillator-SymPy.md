@@ -407,7 +407,7 @@ One can see here very clearly that:
 * The quantum number $$n$$ also gives the number of nodes, i.e. zeros, of the wave function.
 
 * As expected, the wavefunctions vanish for $$|x| \to \infty$$. Any non-vanishing
-  probability for large deflections would mean arbitrarily large energies.
+  probability for large amplitudes would mean arbitrarily large energies.
   
 
 ## References
