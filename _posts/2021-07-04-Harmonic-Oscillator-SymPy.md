@@ -29,7 +29,7 @@ H = \frac{1}{2m} p^2 + \frac{1}{2} m \omega^2 x^2
 $$
 
 By means of the [first quantization][first] the classical Hamiltonian is transformed 
-into the quantum Hamiltonian by simply substituting the canonical variables
+into the quantum Hamiltonian by substituting the canonical variables
 $$x$$ and $$p$$ with operators:
 
 $$
@@ -37,12 +37,12 @@ $$
 $$
 
 Here we are no longer looking for a solution curve for generalized coordinates $$x(t)$$ and $$p(t)$$, but rather
-the $$\hat x$$ and $$\hat p$$ are themselves operators acting on the quantum mechanical state $$\psi$$.
+the $$\hat x$$ and $$\hat p$$ are themselves time-independent operators acting on the quantum mechanical state $$\psi$$, which is
+in the [Schrödinger picture][schrott] a function of time.
 
 Without going into details here now, in the following we consider the state $$\psi$$ in position space,
 where the wave function $$\psi(x,t)$$ is the complex probability amplitude to find a particle in a
-region $$[x, x+ dx]$$ at time $$t$$. In position space the two operators have 
-have the following form
+region $$[x, x+ dx]$$ at time $$t$$. In position space the two canonical operators have the following form
 
 $$
 \hat p = - i \hbar \frac{\partial}{\partial x} \qquad \hat x = x
@@ -62,7 +62,7 @@ $$
 \tilde E = \frac{2 E}{\hbar \omega}
 $$
 
-with which we then have the equation:
+we then have the equation:
 
 $$
 \tilde{E} \psi(\tilde x) = -\frac{\partial^2 \psi(\tilde x)}{\partial \tilde x^2} 
@@ -74,6 +74,7 @@ To solve this equation I will now use SymPy like last time.
 
 [first]: https://en.wikipedia.org/wiki/First_quantization
 [wald_1]: https://znswanderer.github.io/blog/Solving-the-schr%C3%B6dinger-equation-with-SymPy/
+[schrott]: https://en.wikipedia.org/wiki/Schr%C3%B6dinger_picture
 
 
 ```python
@@ -103,7 +104,7 @@ $$\tilde{E} \psi{\left(\tilde{x} \right)} = \tilde{x}^{2} \psi{\left(\tilde{x} \
 
 
 However, if you now search for the solution of the Schrödinger equation by means of `dsolve`, SymPy unfortunately finds 
-but only an approximation via polynomials, which also contains an unknown function $$r()$$:
+only an approximation via polynomials, which also contains an unknown function $$r()$$:
 
 
 ```python
@@ -119,10 +120,11 @@ $$\psi{\left(\tilde{x} \right)} = - \frac{\tilde{E} \tilde{x}^{5} r{\left(3 \rig
 
 Since SymPy fails at this ODE, I tried [Wolfram Alpha][wolfram_alpha] and here
 actually solutions are found in form of the [parabolic cylinder functions][parab], of which
-I have never heard of before. I have the feeling that if I follow this path I will
-quickly get lost in a lot of math and easily go off track.
+I have never heard of before.
 These functions are related to the Hermitian polynomials, which are in fact the solutions 
 of the quantum mechanical oscillator.
+I have the feeling that if I follow this path I will
+quickly get lost in a lot of math and easily go off track.
 
 [wolfram_alpha]: https://www.wolframalpha.com/input/?i=a+*+f+%3D+-f%27%27+%2B+x%5E2+*+f
 [parab]: https://en.wikipedia.org/wiki/Parabolic_cylinder_function
@@ -156,7 +158,15 @@ $$
 $$
 
 Because the commutator of the location and momentum operator does not vanish: 
-$$[\hat x, \hat p] = \hat x \hat p - \hat p \hat x = i \hbar$$, so
+$$[\hat x, \hat p] = \hat x \hat p - \hat p \hat x = i \hbar$$
+we see, that the ladder operators do not commute too:
+
+$$
+[\hat a, \hat a^\dagger ] = 1
+$$
+
+So, the Hamiltonian can be expressed by a product of the ladder operators,
+but the non-vanishing commutator means, that there is an offset:
 
 $$
 \hat H = \hbar \omega \left( \hat a^\dagger \hat a + \frac{1}{2} \right)
@@ -164,13 +174,6 @@ $$
 
 (This can be checked by simply taking the definition of $$\hat a$$ and $$\hat a^\dagger$$ from above
 and using the commutator for $$\hat x$$ and $$\hat p$$).
-
-With the above definition of the ladder operators, we also see that they do not 
-commute:
-
-$$
-[\hat a, \hat a^\dagger ] = 1
-$$
 
 After all, we are looking for the eigenfunctions of the Hamiltonian, which then give the energy eigenvalues $$E$$:
 
