@@ -157,7 +157,7 @@ $$
 \end{aligned}
 $$
 
-Because the commutator of the location and momentum operator does not vanish: 
+Because the commutator of the position and momentum operator does not vanish: 
 $$[\hat x, \hat p] = \hat x \hat p - \hat p \hat x = i \hbar$$
 we see, that the ladder operators do not commute too:
 
