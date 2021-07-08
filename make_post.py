@@ -7,6 +7,7 @@ command = r'jupyter nbconvert {} --to markdown --TagRemovePreprocessor.enabled=T
 import os
 import sys
 import shutil
+from urllib.parse import quote
 
 POST_PATH = r"_posts/"
 IMAGES_PATH = r"assets/images/"
@@ -54,16 +55,19 @@ def move_files(md_path):
     print("move_files...")
     dir_path, md_file_name = os.path.split(md_path)
     bookname, _ = os.path.splitext(md_file_name)
-    shutil.move(md_path, os.path.join(POST_PATH, md_file_name))
-    dst_img_path = os.path.join(IMAGES_PATH, bookname + "_files")
-    shutil.rmtree(dst_img_path, ignore_errors=True)
-    shutil.move(os.path.join(dir_path, bookname + "_files"), dst_img_path)
+    try:
+        shutil.move(md_path, os.path.join(POST_PATH, md_file_name))
+        dst_img_path = os.path.join(IMAGES_PATH, bookname + "_files")
+        shutil.rmtree(dst_img_path, ignore_errors=True)
+        shutil.move(os.path.join(dir_path, bookname + "_files"), dst_img_path)
+    except FileNotFoundError:
+        print("No plots to move")
 
 
 def add_jupyter_link(md_name, txt):
     print("add_jupyter_link...")
     txt += "\n\n"
-    txt += "*The original Jupyter notebook can be found [here](<%s/%s>).*" % (GITHUB_PATH, md_name)
+    txt += "*The original Jupyter notebook can be found [here](<{}/{}>).*".format(GITHUB_PATH, quote(md_name))
     return txt
 
 

@@ -3,20 +3,18 @@ layout: post
 title:  "Solving the Schrödinger Equation with SymPy"
 date:   2021-06-27
 categories: blog
-tags:   [Physics, ODE, SymPy, Quantum Mechanics, Free Particle, Particle in a Box]
+tags:   [Physics, ODE, SymPy, Quantum Mechanics, Free Particle, Particle in a Box, SymPy Solvers]
 ---
-
-
 Today I will briefly show how to use [SymPy][sympy] for solving the Schrödinger equation.
 
 Basically there are two ways to approach the Schrödinger equation with a computer: numerically and analytically/symbolically. For many problems often only the purely numerical way remains, because the corresponding equations cannot be solved analytically or only by analytical approximation methods.
 
-<!--more-->
+[sympy]: https://www.sympy.org/en/index.html
 
+<!--more-->
 But to get a feeling for the symbolic solution of differential equations like the Schrödinger equation, it is advisable to start with the simplest case of a Schrödinger equation: the 
 [quantum free particle][free_particle].
 
-[sympy]: https://www.sympy.org/en/index.html
 [free_particle]: https://en.wikipedia.org/wiki/Free_particle#Quantum_free_particle
 
 ## The quantum free particle
@@ -33,7 +31,7 @@ $$
 \hat{H} = \frac{1}{2m} \hat{p}^2
 $$
 
-With $$\hat p = -i \hbar \frac{\partial}{\partial x}$$ in position space, we get for the hamiltonian:
+With $$\hat p = - i \hbar \frac{\partial}{\partial x}$$ in position space, we get for the hamiltonian:
 
 $$
 \hat{H} = -\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2}
@@ -108,6 +106,9 @@ H_psi = - (hbar**2/ (2 * m)) * smp.diff(psi(x), x, x)
 H_psi
 ```
 
+
+
+
 $$- \frac{\hbar^{2} \frac{d^{2}}{d x^{2}} \psi{\left(x \right)}}{2 m}$$
 
 
@@ -130,7 +131,7 @@ E * psi(x) = H_psi
 ```
 
 
-      File "<ipython-input-3-1668d17d04a1>", line 1
+      File "<ipython-input-4-1668d17d04a1>", line 1
         E * psi(x) = H_psi
         ^
     SyntaxError: cannot assign to operator
@@ -199,8 +200,7 @@ and substitute this in the solution:
 
 
 ```python
-# the k defined above must be positive, because E is real
-k = smp.symbols('k', real=True, positive=True)  
+k = smp.symbols('k', real=True, positive=True)  # the k defined above must be positive, because E is real
 sol = sol.subs(smp.sqrt(2 * E * m) / hbar, k)
 sol
 ```
@@ -226,7 +226,6 @@ C_1 \sin(kx) + C_2 \cos(k x) = A_1 e^{ikx} + A_2 e^{-ikx}
 $$
 
 (The $$C$$´s and $$A$$´s can be complex, too) 
-
 
 ## Particle in a box
 
@@ -255,7 +254,7 @@ $$C_{1} \sin{\left(k x \right)} + C_{2} \cos{\left(k x \right)}$$
 We are now using SymPy´s `solve` function to find the values for $$C_1$$, $$C_2$$ and $$k$$ that will 
 satisfy the constraints given by the box for the free particle.
 
-These constraints are combined in a list, which means an *AND* combination: both 
+These constraints are combined in a list, which means an `and` combination: both 
 constraints must hold at the same time.
 
 
@@ -291,7 +290,8 @@ smp.solve(constraints, (C1, C2, k))
 
 We get two solutions. The first one is trivial and not too useful, as it means $$\psi(x) = 0$$
 
-The second solution is: $$C_2 = 0$$, $$k = \pi / L$$, which gives $$\psi(x) = C_1 \sin(\pi x / L)$$. This is surely correct, but only one possible solution.
+The second solution is: $$C_2 = 0$$, $$k = \pi / L$$, which gives $$\psi(x) = C_1 \sin(\pi x / L)$$. This is surely correct,
+but only one possible solution.
 
 After some ~google searching~ research, I found SymPy´s [solveset][solveset]. Under the heading *What’s wrong with solve()*
 there is explicitly stated, that `solve` has issues with
@@ -314,7 +314,7 @@ nonlinsolve(constraints, (C1, C2, k))
 
 
 
-$$\left\{\left( 0, \  0, \  k\right), \left( C_{1}, \  0, \  \left\{\frac{2 n \pi + \pi}{L}\; |\; n \in \mathbb{Z}\right\}\right), \left( C_{1}, \  0, \  \left\{\frac{2 n \pi}{L}\; |\; n \in \mathbb{Z}\right\}\right)\right\}$$
+$$\left\{\left( 0, \  0, \  k\right), \left( C_{1}, \  0, \  \left\{\frac{2 n \pi + \pi}{L}\; \middle|\; n \in \mathbb{Z}\right\}\right), \left( C_{1}, \  0, \  \left\{\frac{2 n \pi}{L}\; \middle|\; n \in \mathbb{Z}\right\}\right)\right\}$$
 
 
 
@@ -326,7 +326,6 @@ $$
 
 which is, of course, the correct solution for the particle in a box.
 
-
 ## Conclusion
 
 SymPy is a very powerful python package and it is really fantastic, that we get all this for free! 
@@ -334,14 +333,12 @@ SymPy is a very powerful python package and it is really fantastic, that we get 
 On the other hand, even solving a rather simple problem took me quite some time and I feel like 
 getting good in using SymPy would mean some substantial effort.
 
-The Jupyter notebook for this post can be found [here][notebook].
-
 ## References:
 
 * Introduction on how to use ODE solvers in SymPy: <http://www.eg.bucknell.edu/~phys310/jupyter/ode_sympy.html>
-* Thanks to Oscar Benjamin on stackoverflow, <https://stackoverflow.com/a/68133782/16316043>, who helped me with SymPy.
+* Thanks to Oscar Benjamin on [stackoverflow][benjamin], who helped me with SymPy.
 * SymPy documentation: <https://docs.sympy.org/latest/index.html>
 
-[notebook]: https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/2021-06-27-Solving-the-schr%C3%B6dinger-equation-with-SymPy.ipynb
+[benjamin]: https://stackoverflow.com/a/68133782/16316043
 
-
+*The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter//2021-06-27-Solving-the-schr%C3%B6dinger-equation-with-SymPy.ipynb>).*
