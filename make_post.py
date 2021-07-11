@@ -51,6 +51,56 @@ def change_image_links(image_base_path, txt):
 
     return "\n".join(out)
 
+STATE_DEFAULT = 'default'
+STATE_IN_PYTHON = 'python'
+STATE_WAITING_FOR_DOLLARS = "money"
+
+def left_align_math_output(txt):
+    """LaTeX output from python is left aligned in jupyter,
+    but nbconvert exports it as $$ $$ environment with
+    line breaks, so it will be centered.
+    """
+    print("left_align_math_output...")
+    out = []
+    saved_lines = []
+    state = STATE_DEFAULT
+    for line in txt.splitlines():
+        if state == STATE_DEFAULT and line.startswith("```"):
+            state = STATE_IN_PYTHON
+            out.append("{% raw %}") # for Jekyll's liquid
+            out.append(line)
+            continue
+        elif state == STATE_IN_PYTHON and line.startswith("```"):
+            state = STATE_WAITING_FOR_DOLLARS
+            saved_lines = []
+            out.append(line + " {% endraw %}")
+            continue
+        
+        if state != STATE_WAITING_FOR_DOLLARS:
+            out.append(line)
+            continue
+        
+        if line.startswith("$$"):
+            # output after python was Math!
+            #state = STATE_DEFAULT
+            saved_lines = []
+            out.append(line + "  ")
+        elif line.strip() != "":
+            # The output after not not Math
+            state = STATE_DEFAULT
+            out.extend(saved_lines)
+            out.append(line)
+        else:
+            saved_lines.append(line)
+
+    return "\n".join(out)
+
+
+
+
+
+
+
 def move_files(md_path):
     print("move_files...")
     dir_path, md_file_name = os.path.split(md_path)
@@ -88,7 +138,8 @@ if __name__ == '__main__':
     print(image_base_path)
 
     txt = pacify_dollars(txt)
-    txt = remove_displaystyle(txt)
+    #txt = remove_displaystyle(txt)
+    txt = left_align_math_output(txt)
     txt = change_image_links(image_base_path, txt)
     txt = add_jupyter_link(pure_bookname + ".ipynb", txt)
 

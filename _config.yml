@@ -32,10 +32,11 @@ plugins:
   - jekyll-feed
 
 
+#math_engine: mathjax
+
 kramdown:
-  math_engine_opts:
-    preview:         true
-    preview_as_code: false
+  math_engine: nil  # for katex (because kramdown defaults to mathjax)
+
 
 show_excerpts: true
 excerpt_separator: <!--more-->  # you can specify your own separator, of course.
