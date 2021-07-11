@@ -253,8 +253,8 @@ it became clear, that I was in fact *shaving a yak.*
 Why was I doing that? There are perfectly good libraries in Python available for these things. 
 Libraries like:
 
-* https://docs.sympy.org/latest/modules/physics/quantum/index.html
-* https://qutip.org/
+* <https://docs.sympy.org/latest/modules/physics/quantum/index.html>
+* <https://qutip.org/>
 
 There's no need to re-invent the wheel!
 
