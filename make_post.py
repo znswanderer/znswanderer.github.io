@@ -11,7 +11,7 @@ from urllib.parse import quote
 
 POST_PATH = r"_posts/"
 IMAGES_PATH = r"assets/images/"
-GITHUB_PATH = r"https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/"
+GITHUB_PATH = r"https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter"
 
 
 def pacify_dollars(txt):
@@ -50,6 +50,7 @@ def change_image_links(image_base_path, txt):
             out.append(line)
 
     return "\n".join(out)
+
 
 STATE_DEFAULT = 'default'
 STATE_IN_PYTHON = 'python'
@@ -94,11 +95,6 @@ def left_align_math_output(txt):
             saved_lines.append(line)
 
     return "\n".join(out)
-
-
-
-
-
 
 
 def move_files(md_path):
