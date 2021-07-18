@@ -130,7 +130,7 @@ if __name__ == '__main__':
         txt = f.read()
 
     pure_bookname = os.path.split(bookname)[-1]
-    image_base_path = r"{{site.url}}/assets/images/" + pure_bookname
+    image_base_path = r"{{site.url}}/assets/images/" + quote(pure_bookname)
     print(image_base_path)
 
     txt = pacify_dollars(txt)
