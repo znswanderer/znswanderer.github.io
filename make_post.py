@@ -44,7 +44,7 @@ def change_image_links(image_base_path, txt):
         if line.startswith("![png]"):
             picture_name = line.split("/")[-1][:-1]
             out.append('{: style="text-align:center"}')
-            line = r'![png]({}_files/{}){{: width="80%"}}'.format(image_base_path, picture_name)
+            line = r'![png]({}_files/{}){{: width="90%"}}'.format(image_base_path, picture_name)
             out.append(line)
         else:
             out.append(line)
@@ -65,17 +65,19 @@ def left_align_math_output(txt):
     out = []
     saved_lines = []
     state = STATE_DEFAULT
-    for line in txt.splitlines():
+    for n, line in enumerate(txt.splitlines()):
         if state == STATE_DEFAULT and line.startswith("```"):
             state = STATE_IN_PYTHON
-            out.append("{% raw %}") # for Jekyll's liquid
             out.append(line)
             continue
         elif state == STATE_IN_PYTHON and line.startswith("```"):
             state = STATE_WAITING_FOR_DOLLARS
             saved_lines = []
-            out.append(line + " {% endraw %}")
+            out.append(line)
             continue
+
+        if state == STATE_IN_PYTHON:
+            line = line.replace("$$", "$")   # in python we do not need double dollars
         
         if state != STATE_WAITING_FOR_DOLLARS:
             out.append(line)
@@ -83,9 +85,13 @@ def left_align_math_output(txt):
         
         if line.startswith("$$"):
             # output after python was Math!
-            #state = STATE_DEFAULT
+            state = STATE_DEFAULT
             saved_lines = []
             out.append(line + "  ")
+        elif line.startswith("```"):
+            state = STATE_IN_PYTHON
+            out.extend(saved_lines)
+            out.append(line)
         elif line.strip() != "":
             # The output after not not Math
             state = STATE_DEFAULT
@@ -95,6 +101,43 @@ def left_align_math_output(txt):
             saved_lines.append(line)
 
     return "\n".join(out)
+
+STATE_PRE_HEADER = 'preheader'
+STATE_AFTER_HEADER = 'afterheader'
+STATE_IN_HEADER = 'inheader'
+ALLOWED_LIQUIDS = ['{{site.url}}']
+
+def make_raw(txt):
+    '''Make the whole post after the header 'raw' for liquid
+    '''
+    print("make raw...")
+    state = STATE_PRE_HEADER
+    out = []
+    for line in txt.splitlines():
+        if line.startswith("---") and state == STATE_PRE_HEADER:
+            state = STATE_IN_HEADER
+            out.append(line)
+            continue
+        elif line.startswith("---") and state == STATE_IN_HEADER:
+            state = STATE_AFTER_HEADER
+            out.append(line)
+            out.append("{% raw %}") # for Jekyll's liquid
+            continue
+        if line.startswith("<!--more-->"):
+            out.append("{% endraw %}")
+            out.append(line)
+            out.append("{% raw %}") # for Jekyll's liquid
+        elif any(x in line for x in ALLOWED_LIQUIDS):
+            out.append("{% endraw %}")
+            out.append(line)
+            out.append("{% raw %}") # for Jekyll's liquid
+        else:
+            out.append(line)
+
+    if state == STATE_AFTER_HEADER:
+        out.append(" {% endraw %}")
+    return "\n".join(out)
+
 
 
 def move_files(md_path):
@@ -138,6 +181,7 @@ if __name__ == '__main__':
     txt = left_align_math_output(txt)
     txt = change_image_links(image_base_path, txt)
     txt = add_jupyter_link(pure_bookname + ".ipynb", txt)
+    txt = make_raw(txt)
 
     with open(md_path, "w") as f:
         f.write(txt)
