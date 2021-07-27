@@ -2,9 +2,10 @@
 layout: post
 title:  "A solution to the Schrödinger equation for every energy"
 date:   2021-07-18
-categories: blog
-tags:   [Physics, ODE, SciPy, Quantum Mechanics, Harmonic Oscillator, Runge-Kutta, numerical integration, shooting method]
+categories: Physics
+tags:   [ODE, SciPy, Quantum Mechanics, Harmonic Oscillator, Runge-Kutta, numerical integration, shooting method]
 ---
+{% raw %}
 While browsing the chapter on the harmonic oscillator in Griffith's textbook, I learned something interesting:
 
 > Equation 2.70 [the time-independent Schrödinger equation] has solutions, of course, for
@@ -16,7 +17,9 @@ of an *eigenwert* problem, that one simply assumes discrete eigenvalues $$E_n$$ 
 But on the other hand the Schrödinger equation is just an ODE and there should be solutions for
 *every* value of $$E$$! These "solutions", however, will not be valid quantum mechanical states as we will see.
 
+{% endraw %}
 <!--more-->
+{% raw %}
 
 Let's take a look at the time-independent Schrödinger equation:
 
@@ -183,12 +186,11 @@ usual python imports:
 [yak]: https://znswanderer.github.io/blog/Harmonic-Oscillator-SymPy/
 
 
-{% raw %}
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
-``` {% endraw %}
+```
 
 For the numerical solution we need a function $$F(x, y(x))$$, that will take the
 argument 
@@ -214,7 +216,6 @@ $$
 This is done in this python function:
 
 
-{% raw %}
 ```python
 # Harmonic Oscillator
 def harmonic(E):
@@ -222,7 +223,7 @@ def harmonic(E):
         psi, ddx_psi = y
         return [ddx_psi, (x**2 - 2*E) * psi]    
     return F
-``` {% endraw %}
+```
 
 As discussed above, in order to start the integration we need initial conditions for $$\psi$$ and $$\psi'$$. 
 We also have to decide on the starting position $$x_0$$. 
@@ -236,18 +237,19 @@ We use the Runge-Kutta method 'DOP853' in the integration and set the error tole
 because the system is very unstable, as we will see.
 
 
-{% raw %}
 ```python
 x = np.linspace(0, 5, 300)
 sol_hlf = solve_ivp(harmonic(0.5), [x[0], x[-1]], [1, 0], t_eval=x, method = 'DOP853', 
                     rtol=1e-13, atol=1e-18)
 plt.plot(sol_hlf.t, sol_hlf.y[0]);
-``` {% endraw %}
+```
 
 
     
 {: style="text-align:center"}
-![png]({{site.url}}/assets/images/2021-07-18-ODE-for-Schr%C3%B6dinger_files/2021-07-18-ODE-for-Schr%C3%B6dinger_11_0.png){: width="80%"}
+{% endraw %}
+![png]({{site.url}}/assets/images/2021-07-18-ODE-for-Schr%C3%B6dinger_files/2021-07-18-ODE-for-Schr%C3%B6dinger_11_0.png){: width="90%"}
+{% raw %}
     
 
 
@@ -257,41 +259,43 @@ with $$\psi(x_0 = -5) = \psi(5)$$ and $$\psi'(-5) = - \psi'(5)$$. And this indee
 integrates to a symmetrical solution, as expected:
 
 
-{% raw %}
 ```python
 x = np.linspace(-5, 5, 300)
 sol = solve_ivp(harmonic(0.5), [x[0], x[-1]], [sol_hlf.y[0][-1], -sol_hlf.y[1][-1]], 
                 t_eval=x, method = 'DOP853', rtol=1e-13, atol=1e-18)
 plt.plot(sol.t, sol.y[0]);
-``` {% endraw %}
+```
 
 
     
 {: style="text-align:center"}
-![png]({{site.url}}/assets/images/2021-07-18-ODE-for-Schr%C3%B6dinger_files/2021-07-18-ODE-for-Schr%C3%B6dinger_13_0.png){: width="80%"}
+{% endraw %}
+![png]({{site.url}}/assets/images/2021-07-18-ODE-for-Schr%C3%B6dinger_files/2021-07-18-ODE-for-Schr%C3%B6dinger_13_0.png){: width="90%"}
+{% raw %}
     
 
 
 But what happens if we choose $$E$$ to be slightly above or below the eigenvalue?
 
 
-{% raw %}
 ```python
 plt.figure(figsize=(8,6))
 x = np.linspace(0, 3.2, 300)
 for dE in (0, 0.1, -0.1):
     sol_hlf = solve_ivp(harmonic(0.5 + dE), [x[0], x[-1]], [1, 0], t_eval=x, 
                         method = 'DOP853', rtol=1e-13, atol=1e-18)
-    plt.plot(sol_hlf.t, sol_hlf.y[0], label=r"$$\Delta E = {}$$".format(dE))
+    plt.plot(sol_hlf.t, sol_hlf.y[0], label=r"$\Delta E = {}$".format(dE))
 
-plt.title(r"$$E + \Delta E$$")
+plt.title(r"$E + \Delta E$")
 plt.legend(loc='lower left');
-``` {% endraw %}
+```
 
 
     
 {: style="text-align:center"}
-![png]({{site.url}}/assets/images/2021-07-18-ODE-for-Schr%C3%B6dinger_files/2021-07-18-ODE-for-Schr%C3%B6dinger_15_0.png){: width="80%"}
+{% endraw %}
+![png]({{site.url}}/assets/images/2021-07-18-ODE-for-Schr%C3%B6dinger_files/2021-07-18-ODE-for-Schr%C3%B6dinger_15_0.png){: width="90%"}
+{% raw %}
     
 
 
@@ -329,18 +333,19 @@ We can enforce an antisymmetric solution by applying the intial conditions $$\ps
 Let's try this:
 
 
-{% raw %}
 ```python
 x = np.linspace(0, 5, 300)
 sol_hlf = solve_ivp(harmonic(0.5), [x[0], x[-1]], [0, 1], t_eval=x, method = 'DOP853',
                     rtol=1e-13, atol=1e-18)
 plt.plot(sol_hlf.t, sol_hlf.y[0]);
-``` {% endraw %}
+```
 
 
     
 {: style="text-align:center"}
-![png]({{site.url}}/assets/images/2021-07-18-ODE-for-Schr%C3%B6dinger_files/2021-07-18-ODE-for-Schr%C3%B6dinger_18_0.png){: width="80%"}
+{% endraw %}
+![png]({{site.url}}/assets/images/2021-07-18-ODE-for-Schr%C3%B6dinger_files/2021-07-18-ODE-for-Schr%C3%B6dinger_18_0.png){: width="90%"}
+{% raw %}
     
 
 
@@ -351,3 +356,4 @@ All *valid* solutions are indeed the solutions we found [previously][prev] with 
 [prev]: https://znswanderer.github.io/blog/Harmonic-Oscillator-SymPy/
 
 *The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/2021-07-18-ODE-for-Schr%C3%B6dinger.ipynb>).*
+ {% endraw %}

@@ -1,17 +1,26 @@
 ---
+
 layout: post
+
 title:  "Solving the Schrödinger Equation with SymPy"
+
 date:   2021-06-27
-categories: blog
-tags:   [Physics, ODE, SymPy, Quantum Mechanics, Free Particle, Particle in a Box, SymPy Solvers]
+
+categories: Physics
+
+tags:   [ODE, SymPy, Quantum Mechanics, Free Particle, Particle in a Box, SymPy solvers]
+
 ---
+{% raw %}
 Today I will briefly show how to use [SymPy][sympy] for solving the Schrödinger equation.
 
 Basically there are two ways to approach the Schrödinger equation with a computer: numerically and analytically/symbolically. For many problems often only the purely numerical way remains, because the corresponding equations cannot be solved analytically or only by analytical approximation methods.
 
 [sympy]: https://www.sympy.org/en/index.html
 
+{% endraw %}
 <!--more-->
+{% raw %}
 But to get a feeling for the symbolic solution of differential equations like the Schrödinger equation, it is advisable to start with the simplest case of a Schrödinger equation: the 
 [quantum free particle][free_particle].
 
@@ -83,11 +92,17 @@ First, import sympy and define functions, variables, parameters, constants...
 
 ```python
 from IPython.display import display
+
 import sympy as smp
+
 from sympy.physics.quantum.constants import hbar
 
+
+
 psi = smp.symbols(r'\psi', cls=smp.Function, complex=True)
+
 x = smp.symbols('x', real=True)
+
 E, m, L = smp.symbols('E m L', real=True, positive=True)
 ```
 
@@ -105,11 +120,7 @@ This is done with the SymPy expression `diff(psi(x), x, x)`.
 H_psi = - (hbar**2/ (2 * m)) * smp.diff(psi(x), x, x)
 H_psi
 ```
-
-
-
-
-$$- \frac{\hbar^{2} \frac{d^{2}}{d x^{2}} \psi{\left(x \right)}}{2 m}$$
+$$\displaystyle - \frac{\hbar^{2} \frac{d^{2}}{d x^{2}} \psi{\left(x \right)}}{2 m}$$  
 
 
 
@@ -166,11 +177,7 @@ The correct way in SymPy is to define an `Eq` object, like `Eq(RHS, LHS)`. Let's
 eq_schroed = smp.Eq(E * psi(x), H_psi)
 eq_schroed
 ```
-
-
-
-
-$$E \psi{\left(x \right)} = - \frac{\hbar^{2} \frac{d^{2}}{d x^{2}} \psi{\left(x \right)}}{2 m}$$
+$$\displaystyle E \psi{\left(x \right)} = - \frac{\hbar^{2} \frac{d^{2}}{d x^{2}} \psi{\left(x \right)}}{2 m}$$  
 
 
 
@@ -181,11 +188,7 @@ Now, we want to use `SymPy.dsolve` to get the solution for this ordinary differe
 sol = smp.dsolve(eq_schroed, psi(x))
 sol
 ```
-
-
-
-
-$$\psi{\left(x \right)} = C_{1} \sin{\left(\frac{\sqrt{2} \sqrt{E} \sqrt{m} x}{\hbar} \right)} + C_{2} \cos{\left(\frac{\sqrt{2} \sqrt{E} \sqrt{m} x}{\hbar} \right)}$$
+$$\displaystyle \psi{\left(x \right)} = C_{1} \sin{\left(\frac{\sqrt{2} \sqrt{E} \sqrt{m} x}{\hbar} \right)} + C_{2} \cos{\left(\frac{\sqrt{2} \sqrt{E} \sqrt{m} x}{\hbar} \right)}$$  
 
 
 
@@ -204,11 +207,7 @@ k = smp.symbols('k', real=True, positive=True)  # the k defined above must be po
 sol = sol.subs(smp.sqrt(2 * E * m) / hbar, k)
 sol
 ```
-
-
-
-
-$$\psi{\left(x \right)} = C_{1} \sin{\left(k x \right)} + C_{2} \cos{\left(k x \right)}$$
+$$\displaystyle \psi{\left(x \right)} = C_{1} \sin{\left(k x \right)} + C_{2} \cos{\left(k x \right)}$$  
 
 
 
@@ -243,11 +242,7 @@ The original solution for the free particle is stored in `sol.rhs`
 ```python
 sol.rhs
 ```
-
-
-
-
-$$C_{1} \sin{\left(k x \right)} + C_{2} \cos{\left(k x \right)}$$
+$$\displaystyle C_{1} \sin{\left(k x \right)} + C_{2} \cos{\left(k x \right)}$$  
 
 
 
@@ -262,13 +257,11 @@ constraints must hold at the same time.
 constraints = [smp.Eq(sol.rhs.subs(x, 0), 0), smp.Eq(sol.rhs.subs(x, L), 0)]
 for c in constraints: display(c)
 ```
-
-
-$$C_{2} = 0$$
+$$\displaystyle C_{2} = 0$$  
 
 
 
-$$C_{1} \sin{\left(L k \right)} + C_{2} \cos{\left(L k \right)} = 0$$
+$$\displaystyle C_{1} \sin{\left(L k \right)} + C_{2} \cos{\left(L k \right)} = 0$$
 
 
 (Here we could also use `constraints = [sol.rhs.subs(x, 0), sol.rhs.subs(x, L)]` as the constraints as just giving the term means implicitly equality with 0)
@@ -310,11 +303,7 @@ Luckily, same module has `nonlinsolve` which works perfectly:
 from sympy.solvers.solveset import nonlinsolve
 nonlinsolve(constraints, (C1, C2, k))
 ```
-
-
-
-
-$$\left\{\left( 0, \  0, \  k\right), \left( C_{1}, \  0, \  \left\{\frac{2 n \pi + \pi}{L}\; \middle|\; n \in \mathbb{Z}\right\}\right), \left( C_{1}, \  0, \  \left\{\frac{2 n \pi}{L}\; \middle|\; n \in \mathbb{Z}\right\}\right)\right\}$$
+$$\displaystyle \left\{\left( 0, \  0, \  k\right), \left( C_{1}, \  0, \  \left\{\frac{2 n \pi + \pi}{L}\; \middle|\; n \in \mathbb{Z}\right\}\right), \left( C_{1}, \  0, \  \left\{\frac{2 n \pi}{L}\; \middle|\; n \in \mathbb{Z}\right\}\right)\right\}$$  
 
 
 
@@ -341,4 +330,5 @@ getting good in using SymPy would mean some substantial effort.
 
 [benjamin]: https://stackoverflow.com/a/68133782/16316043
 
-*The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter//2021-06-27-Solving-the-schr%C3%B6dinger-equation-with-SymPy.ipynb>).*
+*The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/2021-06-27-Solving-the-schr%C3%B6dinger-equation-with-SymPy.ipynb>).*
+ {% endraw %}

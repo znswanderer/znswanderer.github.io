@@ -8,6 +8,8 @@ import os
 import sys
 import shutil
 from urllib.parse import quote
+import glob
+
 
 POST_PATH = r"_posts/"
 IMAGES_PATH = r"assets/images/"
@@ -160,9 +162,8 @@ def add_jupyter_link(md_name, txt):
     return txt
 
 
-if __name__ == '__main__':
+def convert(notebook):
     print("Running nbconvert...")
-    notebook = sys.argv[1]
     bookname, extension = os.path.splitext(notebook)
     print(command.format(notebook))
     os.system(command.format(notebook))
@@ -187,6 +188,12 @@ if __name__ == '__main__':
         f.write(txt)
 
     move_files(md_path)
+
+
+if __name__ == '__main__':
+    pattern = sys.argv[1]
+    for notebook in glob.glob(pattern):
+        convert(notebook)
 
 
 

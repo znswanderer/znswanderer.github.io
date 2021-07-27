@@ -2,13 +2,16 @@
 layout: post
 title:  "The Quantum Harmonic Oscillator with SymPy"
 date:   2021-07-04
-categories: blog
-tags:   [Physics, ODE, SymPy, Quantum Mechanics, Harmonic Oscillator]
+categories: Physics
+tags:   [ODE, SymPy, Quantum Mechanics, Harmonic Oscillator]
 ---
+{% raw %}
 In the last post I described how to use SymPy to analytically solve the Schrödinger equation of the free particle and the particle in the infinite potential box. But these were really quite simple problems. This time I would like to consider one of the most important example systems of quantum mechanics, namely the *quantum harmonic oscillator*.
 
 
+{% endraw %}
 <!--more-->
+{% raw %}
 A (one-dimensional) classical harmonic oscillator is described by the following potential term:
 
 $$
@@ -95,11 +98,7 @@ H_psi = - smp.diff(psi(x), x, x) + x**2 * psi(x)
 eq_schroed = smp.Eq(E * psi(x), H_psi)
 eq_schroed
 ```
-
-
-
-
-$$\tilde{E} \psi{\left(\tilde{x} \right)} = \tilde{x}^{2} \psi{\left(\tilde{x} \right)} - \frac{d^{2}}{d \tilde{x}^{2}} \psi{\left(\tilde{x} \right)}$$
+$$\displaystyle \tilde{E} \psi{\left(\tilde{x} \right)} = \tilde{x}^{2} \psi{\left(\tilde{x} \right)} - \frac{d^{2}}{d \tilde{x}^{2}} \psi{\left(\tilde{x} \right)}$$  
 
 
 
@@ -110,11 +109,7 @@ only an approximation via polynomials, which also contains an unknown function $
 ```python
 smp.dsolve(eq_schroed, psi(x))
 ```
-
-
-
-
-$$\psi{\left(\tilde{x} \right)} = - \frac{\tilde{E} \tilde{x}^{5} r{\left(3 \right)}}{20} + C_{2} \left(\frac{\tilde{E}^{2} \tilde{x}^{4}}{24} - \frac{\tilde{E} \tilde{x}^{2}}{2} + \frac{\tilde{x}^{4}}{12} + 1\right) + C_{1} \tilde{x} \left(\frac{\tilde{x}^{4}}{20} + 1\right) + O\left(\tilde{x}^{6}\right)$$
+$$\displaystyle \psi{\left(\tilde{x} \right)} = - \frac{\tilde{E} \tilde{x}^{5} r{\left(3 \right)}}{20} + C_{2} \left(\frac{\tilde{E}^{2} \tilde{x}^{4}}{24} - \frac{\tilde{E} \tilde{x}^{2}}{2} + \frac{\tilde{x}^{4}}{12} + 1\right) + C_{1} \tilde{x} \left(\frac{\tilde{x}^{4}}{20} + 1\right) + O\left(\tilde{x}^{6}\right)$$  
 
 
 
@@ -310,11 +305,7 @@ We can now express this ODE in SymPy again:
 eq_psi0 = smp.Eq(x * psi(x) + smp.diff(psi(x), x), 0)
 eq_psi0
 ```
-
-
-
-
-$$\tilde{x} \psi{\left(\tilde{x} \right)} + \frac{d}{d \tilde{x}} \psi{\left(\tilde{x} \right)} = 0$$
+$$\displaystyle \tilde{x} \psi{\left(\tilde{x} \right)} + \frac{d}{d \tilde{x}} \psi{\left(\tilde{x} \right)} = 0$$  
 
 
 
@@ -325,11 +316,7 @@ And here SymPy succeeds in providing the solution:
 sol = smp.dsolve(eq_psi0, psi(x))
 sol
 ```
-
-
-
-
-$$\psi{\left(\tilde{x} \right)} = C_{1} e^{- \frac{\tilde{x}^{2}}{2}}$$
+$$\displaystyle \psi{\left(\tilde{x} \right)} = C_{1} e^{- \frac{\tilde{x}^{2}}{2}}$$  
 
 
 
@@ -354,7 +341,9 @@ plt.plot(xx, normalized(psi0_lmb(xx)));
 
     
 {: style="text-align:center"}
-![png]({{site.url}}/assets/images/2021-07-04-Harmonic-Oscillator-SymPy_files/2021-07-04-Harmonic-Oscillator-SymPy_22_0.png){: width="80%"}
+{% endraw %}
+![png]({{site.url}}/assets/images/2021-07-04-Harmonic-Oscillator-SymPy_files/2021-07-04-Harmonic-Oscillator-SymPy_22_0.png){: width="90%"}
+{% raw %}
     
 
 
@@ -381,14 +370,14 @@ def a_dagger(func):
 xx = np.linspace(-5, 5, 100)
 plt.figure(figsize=(8,6))
 plt.plot(xx, 0.02 * xx**2, "k--", lw=1.0) # arbitrary scaling of the potential
-plt.plot(xx, normalized(psi0_lmb(xx)), label="$$\psi_0$$")
+plt.plot(xx, normalized(psi0_lmb(xx)), label="$\psi_0$")
 
 psi = 1 * psi0  # make a copy, so that we dont change the original function below
 
 for n in range(1, 4):
     psi = a_dagger(psi)
     psi_lmb = smp.lambdify(x, psi)
-    plt.plot(xx, normalized(psi_lmb(xx)), label="$$\psi_{}$$".format(n))
+    plt.plot(xx, normalized(psi_lmb(xx)), label="$\psi_{}$".format(n))
 
 plt.legend(loc='upper right');
 ```
@@ -396,7 +385,9 @@ plt.legend(loc='upper right');
 
     
 {: style="text-align:center"}
-![png]({{site.url}}/assets/images/2021-07-04-Harmonic-Oscillator-SymPy_files/2021-07-04-Harmonic-Oscillator-SymPy_25_0.png){: width="80%"}
+{% endraw %}
+![png]({{site.url}}/assets/images/2021-07-04-Harmonic-Oscillator-SymPy_files/2021-07-04-Harmonic-Oscillator-SymPy_25_0.png){: width="90%"}
+{% raw %}
     
 
 
@@ -416,4 +407,5 @@ One can see here clearly that:
 * David J. Griffiths, Introduction to Quantum Mechanics, 2nd Edition, Section 2.3
 * <https://en.wikipedia.org/wiki/Quantum_harmonic_oscillator#Ladder_operator_method>
 
-*The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter//2021-07-04-Harmonic-Oscillator-SymPy.ipynb>).*
+*The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/2021-07-04-Harmonic-Oscillator-SymPy.ipynb>).*
+ {% endraw %}
