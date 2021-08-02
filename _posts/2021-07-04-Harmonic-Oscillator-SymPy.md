@@ -76,7 +76,7 @@ To solve this equation I will now use SymPy like last time.
 
 
 [first]: https://en.wikipedia.org/wiki/First_quantization
-[wald_1]: https://znswanderer.github.io/blog/Solving-the-schr%C3%B6dinger-equation-with-SymPy/
+[wald_1]: https://znswanderer.github.io/physics/Solving-the-schr%C3%B6dinger-equation-with-SymPy/
 [schrott]: https://en.wikipedia.org/wiki/Schr%C3%B6dinger_picture
 
 

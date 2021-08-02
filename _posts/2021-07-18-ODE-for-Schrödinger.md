@@ -183,7 +183,7 @@ can be solved for any energy. How do wavefunctions look like for energies other 
 To answer this question, we will use the numerical solving method, which we described above. First, the
 usual python imports:
 
-[yak]: https://znswanderer.github.io/blog/Harmonic-Oscillator-SymPy/
+[yak]: https://znswanderer.github.io/physics/Harmonic-Oscillator-SymPy/
 
 
 ```python
@@ -353,7 +353,7 @@ So the second solution for $$E=0.5$$ blows up too and can not be a "real" soluti
 
 All *valid* solutions are indeed the solutions we found [previously][prev] with the ladder-operators.
 
-[prev]: https://znswanderer.github.io/blog/Harmonic-Oscillator-SymPy/
+[prev]: https://znswanderer.github.io/physics/Harmonic-Oscillator-SymPy/
 
 *The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/2021-07-18-ODE-for-Schr%C3%B6dinger.ipynb>).*
  {% endraw %}
