@@ -536,7 +536,7 @@ lines of the continuous system.
 
 So, let's say we want to construct such a matrix $$\mathbf{P_d}$$, that has the
 linear eigenvalues $$p_n = \hbar k_n =  2 \pi \hbar n / L$$ for the known discrete 
-eigenfunctions $$\mathbf{p_n}$$. If we use the [bra-ket][dirac], this momentum operator would look like:
+eigenfunctions $$\mathbf{p_n}$$. If we use the [bra-ket][dirac] notation, this momentum operator would look like:
 
 $$
 \hat P_d = \sum_{n} p_n \ket{p_n}  \bra{p_n} \, .
