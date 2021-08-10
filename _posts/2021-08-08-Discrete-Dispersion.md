@@ -448,17 +448,27 @@ which is plotted as the solid blue curve "discrete" in the graph above.
 [vanhalen]: https://en.wikipedia.org/wiki/Classification_of_discontinuities#Jump_discontinuity
 
 Looking at the point $$n= (m + \frac{1}{2})N$$ we find that here we have $$p=0$$, but the energy however
-is at its maximum value $$E = E_{max}$$! 
+is at its maximum value $$E = E_{\max}$$! 
 This is rather strange, because the system only has kinetic energy, but how can there be maximum
 kinetic energy if the momentum is zero?
 
 At this point, I don't want to get into too much detail here, but basically because of the 
 discreteness of space, the travelling wave becomes a *standing wave* at  $$n= (m + \frac{1}{2})N$$ and
-all "kinetic" energy is from the osciallting parts of the wave in place. For further information
+all "kinetic" energy is from the oscillating parts of the wave in place. It must be understood, that
+here the fact that $$p$$ is zero at $$E_{\max}$$ is an *artifact of the discretization of space*, as 
+well as the fact, that the whole [dispersion relation][dispersion] deviates from the $$E \propto p^2$$ 
+dispersion relation of the free particle. On the other hand such a dispersion relation can be seen 
+for [phonons], quantized lattice oscillations in crystals.
+
+For further information
 dive into topics like:
+
 * [group velocity](https://en.wikipedia.org/wiki/Group_velocity) versus [phase velocity](https://en.wikipedia.org/wiki/Phase_velocity)
 * [crystal momentum](https://en.wikipedia.org/wiki/Crystal_momentum)
 * [Brillouin zone](https://en.wikipedia.org/wiki/Brillouin_zone)
+
+[dispersion]: https://en.wikipedia.org/wiki/Dispersion_relation
+[phonons]: https://en.wikipedia.org/wiki/Phonon
 
 ## Alternative momentum operator
 
