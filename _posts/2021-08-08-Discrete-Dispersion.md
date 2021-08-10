@@ -455,10 +455,12 @@ kinetic energy if the momentum is zero?
 At this point, I don't want to get into too much detail here, but basically because of the 
 discreteness of space, the travelling wave becomes a *standing wave* at  $$n= (m + \frac{1}{2})N$$ and
 all "kinetic" energy is from the oscillating parts of the wave in place. It must be understood, that
-here the fact that $$p$$ is zero at $$E_{\max}$$ is an *artifact of the discretization of space*, as 
-well as the fact, that the whole [dispersion relation][dispersion] deviates from the $$E \propto p^2$$ 
-dispersion relation of the free particle. On the other hand such a dispersion relation can be seen 
-for [phonons], quantized lattice oscillations in crystals.
+here the fact that $$p$$ is zero at $$E_{\max}$$ is an *artifact of the discretization of space* and 
+not a physical reality. The whole [dispersion relation][dispersion] deviates from the $$E \propto p^2$$ 
+dispersion relation of the free particle in the discrete space. 
+On the other hand such a dispersion relation is physical in real periodic systems, like 
+crystals, where the quasi-particles named [phonons], quantized lattice oscillations, show
+in part exactly these dispersion relations.
 
 For further information
 dive into topics like:
@@ -477,7 +479,7 @@ discrete system. We would like an operator, that has the correct eigenfunctions,
 eigenvalues would follow the continuous straight line for a larger range of $$n$$-values.
 The only restriction we have is, that the eigenvalues must be periodic $$p_n = p_{n+mN}$$.
 
-We are looking for momentum eigenvalues, that are kind of a "streched" sinus function
+We are looking for momentum eigenvalues, that are kind of a "stretched" sinus function
 along the straight lines of the continuous eigenvalues, which I tried to 
 picture in the following graph:
 
