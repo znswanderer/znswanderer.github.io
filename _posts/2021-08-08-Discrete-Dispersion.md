@@ -596,7 +596,7 @@ Lambda = np.diag(kns)
 Pd = Q @ Lambda @ Q_inv * dx   
 
 # The Hamiltonian
-Hd = - (hbar**2 / (2 * mass)) * (Pd @ Pd)
+Hd = (hbar**2 / (2 * mass)) * (Pd @ Pd)
 ```
 
 The Hamiltonian constructed with this matrix will now show between $$-N/2$$ and $$N/2$$ the 
@@ -609,7 +609,7 @@ energies = []
 n_2N = np.arange(-N, N+1)
 for n in n_2N:
     _, _, psi = psi_n(n)
-    E_n = np.average(np.abs((Hd @ psi) / psi))
+    E_n = np.average(((Hd @ psi) / psi).real)
     energies.append(E_n)
     
 plt.plot(n_2N/N, np.array(energies)/E_max)
