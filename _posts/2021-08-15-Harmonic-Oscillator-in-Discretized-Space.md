@@ -83,7 +83,8 @@ class QM_SHO_Local(QM_SHO):
     def Hamiltonian(self):
         D2 = self.D2()
         X = self.X()
-        return (-(self.hbar**2 / (2 * self.mass)) * D2 + 0.5 * self.mass * self.omega**2 * (X @ X))
+        return (-(self.hbar**2 / (2 * self.mass)) * D2 
+                + 0.5 * self.mass * self.omega**2 * (X @ X))
     
     def eigh(self):
         return linalg.eigsh(self.Hamiltonian(), k=self.N - 1, which='SM')
@@ -159,8 +160,7 @@ plot_eigenfunctions([qm], range(4))
 
 
 Here we now get the correct energy values, but it is surely to be expected, that for
-higher $$n$$-values than $$n=3$$ the energy values will be differ again. But in principle 
-we can adjust the spatial resolution $$N$$.
+higher $$n$$-values than $$n=3$$ the energy values will be differ again.
 
 *(The fact, that some eigenfunctions in the graph for $$N=600$$ are the negative of 
 the functions for $$N=300$$ is no matter of concern, because if $$\psi(x)$$ is an 
@@ -220,7 +220,8 @@ class QM_SHO_Nonlocal(QM_SHO):
     def Hamiltonian(self):
         X = self.X()
         Pd = self.Pd()
-        return (self.hbar**2 / (2 * self.mass)) * (Pd @ Pd) + 0.5 * self.mass * self.omega**2 * (X @ X)
+        return ((self.hbar**2 / (2 * self.mass)) * (Pd @ Pd) 
+                + 0.5 * self.mass * self.omega**2 * (X @ X))
     
     def eigh(self):
         return np.linalg.eigh(self.Hamiltonian())
@@ -277,7 +278,8 @@ plt.figure(figsize=(10,6))
 omega = 1000
 max_n = 170
 ns = np.arange(0, max_n)
-plt.plot(ns,(ns + 0.5) * omega , color="grey", linewidth=10, label=r'$\hbar \omega (n + \frac{1}{2})$', alpha=0.3)
+plt.plot(ns,(ns + 0.5) * omega , color="grey", linewidth=10, 
+         label=r'$\hbar \omega (n + \frac{1}{2})$', alpha=0.3)
 
 for klass in [QM_SHO_Nonlocal, QM_SHO_Local]:
     qm = klass(L=1, N=300, omega=omega)
@@ -317,7 +319,8 @@ plt.figure(figsize=(10,6))
 omega = 100
 max_n = 25
 ns = np.arange(0, max_n)
-plt.plot(ns,(ns + 0.5) * omega , color="grey", linewidth=10, label=r'$\hbar \omega (n + \frac{1}{2})$', alpha=0.3)
+plt.plot(ns,(ns + 0.5) * omega , color="grey", linewidth=10, 
+         label=r'$\hbar \omega (n + \frac{1}{2})$', alpha=0.3)
 
 for klass in [QM_SHO_Nonlocal, QM_SHO_Local]:
     qm = klass(L=1, N=300, omega=omega)
