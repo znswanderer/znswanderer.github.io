@@ -370,8 +370,12 @@ values in these cases!
 We have seen, that the non-local momentum operator yields perfect solutions even for very coarse 
 spatial resolutions. Therefore it might be reasonable to use this operator instead of the 
 local $$\textbf{P2}$$ operator, which on the other hand has the advantage, that we can model this
-operator as an efficient *sparse* matrix. But, as written in the last post, we could use the 
-[split-step method][split] to deal with the non-local operator in an effient way.
+operator as an efficient *sparse* matrix. 
+
+If we are simulating the time-*dependent* Schrödinger equation (and not 
+trying to solve eigenvalue problems) we could use the 
+[split-step method][split] to deal with the non-local operator in an effient way
+as an alternative to sparse matrices.
 
 In the last part we learned, that both operators yield wrong results, once the bounded 
 functions reach the end of the discrete spatial domain. So for bounded problems (like
