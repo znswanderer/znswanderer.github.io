@@ -78,6 +78,7 @@ Now, let's test the FFT routines
 qm = QM1DParticle(128)
 _, _, psi = psi_n(qm, 3)
 psi_fft = np.fft.fft(psi)
+plt.figure(figsize=(8,6))
 plt.plot(np.abs(psi_fft), 'o');
 ```
 
@@ -150,7 +151,7 @@ _, _, psi = psi_n(QM1DParticle(128), 3)
 %timeit np.fft.fft(psi)
 ```
 
-    3.66 µs ± 264 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+    3.9 µs ± 228 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 
 
 
@@ -159,7 +160,7 @@ _, _, psi = psi_n(QM1DParticle(129), 3)
 %timeit np.fft.fft(psi)
 ```
 
-    6.25 µs ± 378 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+    6.86 µs ± 416 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 
 
 
@@ -168,7 +169,7 @@ _, _, psi = psi_n(QM1DParticle(127), 3)
 %timeit np.fft.fft(psi)
 ```
 
-    8.46 µs ± 94.5 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+    9.29 µs ± 211 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 
 
 So `fft` for a system of $$N=129$$ takes roughly two times the running time compare to $$N=128$$
@@ -227,6 +228,7 @@ of the numerical precision. So the constructed operator works.
 
 ```python
 fft_P = FFTMomentum(qm)
+plt.figure(figsize=(8,6))
 for n in [1, -qm.N//4, qm.N//2 - 1]:
     psi = psi_n(qm, n)[-1]
     p_n = 2 * np.pi * qm.hbar * n / qm.L
@@ -251,6 +253,7 @@ eigvalsFFT, eigvecsFFT = linalg.eigsh(fft_P, k=qm.N - 2, which='SA')
 eigs = np.array(sorted(eigvalsFFT))
 ns = np.arange(-qm.N//2, qm.N//2)[0:len(eigs)]
 pns = 2 * np.pi * qm.hbar * ns / qm.L
+plt.figure(figsize=(8,6))
 plt.plot(ns, eigs, 'o', label="eigvalsFFT", markevery=5)
 plt.plot(ns, pns, label="$2 \pi \hbar n / L$")
 plt.xlabel("$n$")
@@ -444,6 +447,8 @@ for res in resolutions:
 
 
 ```python
+plt.figure(figsize=(8,6))
+
 for name, results in times.items():
     plt.plot(resolutions, results, 'o-', label=name)
 
@@ -521,6 +526,7 @@ non-local momentum operator:
 qm = QM1DParticle(N=64)
 SHO_fftd2 = SHO(qm, Ekin_opr=FFTD2(qm), omega=500)
 
+plt.figure(figsize=(8,6))
 eigs_fftd2, _ = linalg.eigsh(SHO_fftd2.Hamiltonian(), k=35, which='SA')
 plt.plot(sorted(eigs_fftd2/SHO_fftd2.hbar_omega), label='SHO_fftd2')
 plt.ylabel(r'$E_n/\hbar \omega$')
@@ -545,7 +551,7 @@ calculation time for these eigenvalues is:
 %timeit linalg.eigsh(SHO_fftd2.Hamiltonian(), k=35, which='SA')
 ```
 
-    7.07 ms ± 73.3 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    7.68 ms ± 287 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 We now want to get eigenvalues of similar quality with the sparse local operator.
@@ -557,6 +563,8 @@ qm2 = QM1DParticle(N=300)
 SHO_sparse = SHO(qm2, Ekin_opr=Ekin_opr_factory(sparse_D2)(qm2), omega=500)
 
 eigs_sparse, _ = linalg.eigsh(SHO_sparse.Hamiltonian(), k=35, which='SA')
+
+plt.figure(figsize=(8,6))
 plt.plot(sorted(eigs_fftd2/SHO_fftd2.hbar_omega), label='SHO_fftd2')
 plt.plot(sorted(eigs_sparse/SHO_sparse.hbar_omega), label='SHO_sparse')
 plt.ylabel(r'$E_n/\hbar \omega$')
@@ -580,7 +588,7 @@ The running time is now:
 %timeit linalg.eigsh(SHO_sparse.Hamiltonian(), k=35, which='SA')
 ```
 
-    18 ms ± 110 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    19.8 ms ± 635 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 So, at least in this example it is more efficient to use the non-local operator 
