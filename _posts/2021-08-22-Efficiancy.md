@@ -151,7 +151,7 @@ _, _, psi = psi_n(QM1DParticle(128), 3)
 %timeit np.fft.fft(psi)
 ```
 
-    3.9 µs ± 228 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+    3.77 µs ± 265 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 
 
 
@@ -160,7 +160,7 @@ _, _, psi = psi_n(QM1DParticle(129), 3)
 %timeit np.fft.fft(psi)
 ```
 
-    6.86 µs ± 416 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+    6.32 µs ± 311 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 
 
 
@@ -169,7 +169,7 @@ _, _, psi = psi_n(QM1DParticle(127), 3)
 %timeit np.fft.fft(psi)
 ```
 
-    9.29 µs ± 211 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+    9.15 µs ± 222 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 
 
 So `fft` for a system of $$N=129$$ takes roughly two times the running time compare to $$N=128$$
@@ -551,7 +551,7 @@ calculation time for these eigenvalues is:
 %timeit linalg.eigsh(SHO_fftd2.Hamiltonian(), k=35, which='SA')
 ```
 
-    7.68 ms ± 287 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    7.22 ms ± 141 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 We now want to get eigenvalues of similar quality with the sparse local operator.
@@ -588,7 +588,7 @@ The running time is now:
 %timeit linalg.eigsh(SHO_sparse.Hamiltonian(), k=35, which='SA')
 ```
 
-    19.8 ms ± 635 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+    19.7 ms ± 688 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 So, at least in this example it is more efficient to use the non-local operator 
@@ -611,6 +611,61 @@ Linear Operator from scipy. I only skimmed this package, but it seems to be prom
 one is interested in using linear operators.
 
 [pylops]: https://github.com/PyLops/pylops
+
+## Addition (2021-09-01)
+
+The scipy function `linalg.eigsh`, which we used above, is quite general and allows
+all possible matrices and linear operators as arguments. But the local $$\mathbf{D2}$$ matrix that
+we use has a very special form, namely that it only takes values on the main diagonal
+and the directly adjacent diagonals. In the scipy module there is a special function
+`scipy.linalg.eigh_tridiagonal` for exactly such cases. Such special functions are optimized and
+have better performance than the more general functions, as we will see below:
+
+
+```python
+omega = 500
+diag = 0.5 * qm2.mass * omega**2 * (qm2.x - 0.5)**2 + qm2.hbar**2 / (qm2.mass * qm2.dx**2)
+off_diag = - qm2.hbar**2 /(2 * qm2.mass * qm2.dx**2) * np.ones(len(qm2.x) - 1)
+```
+
+
+```python
+from scipy.linalg import eigh_tridiagonal
+eigvals_tri, eigvecs_tri = eigh_tridiagonal(diag, off_diag, select='i', select_range=(0, 34))
+```
+
+
+```python
+plt.figure(figsize=(8,6))
+plt.plot(sorted(eigs_fftd2/SHO_fftd2.hbar_omega), label='SHO_fftd2')
+plt.plot(sorted(eigs_sparse/SHO_sparse.hbar_omega), label='SHO_sparse')
+plt.plot(eigvals_tri/(qm2.mass * omega), 'o', color='#0077BB', label='SHO_tri')
+plt.ylabel(r'$E_n/\hbar \omega$')
+plt.xlabel(r'$n$')
+plt.legend();
+```
+
+
+    
+{: style="text-align:center"}
+{% endraw %}
+![png]({{site.url}}/assets/images/2021-08-22-Efficiancy_files/2021-08-22-Efficiancy_59_0.png){: width="90%"}
+{% raw %}
+    
+
+
+So this method yields exactly the same eigenvalues as the use of the more general
+function `linalg.eigsh`. However, the runtime is now much better:
+
+
+```python
+%timeit eigh_tridiagonal(diag, off_diag, select='i', select_range=(0, 34))
+```
+
+    3.33 ms ± 173 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+
+
+With this we have again a better performance than with the non-local operator!
 
 *The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/2021-08-22-Efficiancy.ipynb>).*
  {% endraw %}
