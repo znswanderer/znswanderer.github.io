@@ -141,11 +141,30 @@ def make_raw(txt):
     return "\n".join(out)
 
 
+def fix_video(image_base_path, txt):
+    print("fix_video", image_base_path)
+    video_files = []
+    out = []
+    for line in txt.splitlines():
+        if line.startswith('<video src='):
+            line_parts = line.split('"')    
+            v_file = line_parts[1]
+            video_files.append(v_file)
+            line_parts[1] = r'{}_files/{}'.format(image_base_path, v_file)
+            out.append("{% endraw %}")
+            out.append('"'.join(line_parts))
+            out.append("{% raw %}")
+        else:
+            out.append(line)
+
+    return "\n".join(out), video_files
 
 def move_files(md_path):
-    print("move_files...")
+    print("move_files...", md_path)
     dir_path, md_file_name = os.path.split(md_path)
     bookname, _ = os.path.splitext(md_file_name)
+    print(md_file_name)
+    print(os.path.join(dir_path, bookname + "_files"))
     try:
         shutil.move(md_path, os.path.join(POST_PATH, md_file_name))
         dst_img_path = os.path.join(IMAGES_PATH, bookname + "_files")
@@ -153,6 +172,19 @@ def move_files(md_path):
         shutil.move(os.path.join(dir_path, bookname + "_files"), dst_img_path)
     except FileNotFoundError:
         print("No plots to move")
+
+
+def copy_videos(md_path, video_files):
+    print("copy_videos...", md_path)
+    dir_path, md_file_name = os.path.split(md_path)
+    bookname, _ = os.path.splitext(md_file_name)
+    for v_file in video_files:
+        print("copying", v_file)
+        dst_img_path = os.path.join(IMAGES_PATH, bookname + "_files")
+        print(dst_img_path)
+        shutil.copy(os.path.join(dir_path, v_file), dst_img_path)
+
+        #shutil.copy(src, dst)
 
 
 def add_jupyter_link(md_name, txt):
@@ -183,11 +215,13 @@ def convert(notebook):
     txt = change_image_links(image_base_path, txt)
     txt = add_jupyter_link(pure_bookname + ".ipynb", txt)
     txt = make_raw(txt)
+    txt, video_files = fix_video(image_base_path, txt)
 
     with open(md_path, "w") as f:
         f.write(txt)
 
     move_files(md_path)
+    copy_videos(md_path, video_files)
 
 
 if __name__ == '__main__':
