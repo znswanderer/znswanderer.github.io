@@ -3,7 +3,7 @@ layout: post
 title:  "Time evolution of the Harmonic Oscillator"
 date:   2022-04-24
 categories: Physics
-tags:   [Quantum Mechanics, Harmonic Oscillator, Dynamics, Wave Packet]
+tags:   [Quantum Mechanics, Harmonic Oscillator, Dynamics, Wave Packet, sympy.integrate, Runge-Kutta, numerical integration]
 ---
 {% raw %}
 This post shows a simulation of a quantum wave packet oscillating in a harmonic potential. For this we will be using the time-dependent Schrödinger equation.
