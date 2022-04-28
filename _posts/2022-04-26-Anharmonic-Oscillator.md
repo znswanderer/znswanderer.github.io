@@ -302,5 +302,68 @@ $$
 
 which are clearly not equistant.
 
+# Addendum 2022-04-28
+
+We can also take a look at the evolution of a system, which is given only a slight boost:
+
+
+```python
+# Boosting some momentum units:
+U_dp_low = boost(dp=0.5)
+psi_dp_low = U_dp_low @ psi0
+
+an_low = basis.conj().T @ psi_dp_low * dx
+En = eigs
+
+plt.figure(figsize=(8,6))
+plt.plot(En, np.abs(an_low), 'o')
+plt.xlabel("$E_n$")
+plt.ylabel("$|a_n|$");
+```
+
+
+    
+{: style="text-align:center"}
+{% endraw %}
+![png]({{site.url}}/assets/images/2022-04-26-Anharmonic-Oscillator_files/2022-04-26-Anharmonic-Oscillator_29_0.png){: width="90%"}
+{% raw %}
+    
+
+
+And calculate a longer time series for looking at recurrents:
+
+
+```python
+def psi_t_low(t):
+    psi_t = np.sum(an_low * np.exp(-1j * En * t/ hbar) * basis, axis=1)
+    return psi_t
+
+t_eval_long = np.linspace(0, 300, 3*501)
+sol_long = np.array([psi_t_low(t) for t in t_eval_long]).T
+```
+
+
+```python
+anim = WaveAnimation(x, psi_t=sol_long, V_vec=V_morse_f(x, 0, De, a)*0.2 , t_vec=t_eval_long)
+anim.ax1.set_xlim(-5, 15)
+anim.ax1.set_ylim(-0.1, 1)
+anim.save_mp4('wave_eigs_morse_long.mp4')
+
+Video('wave_eigs_morse_long.mp4', width=600)
+```
+
+
+
+
+{% endraw %}
+<video src="{{site.url}}/assets/images/2022-04-26-Anharmonic-Oscillator_files/wave_eigs_morse_long.mp4" controls  width="600" >
+{% raw %}
+      Your browser does not support the <code>video</code> element.
+    </video>
+
+
+
+I think, the more energy eigenstates are excited, the less likely we will see a recurrence of the inital state (if the eigenfrequencies have no common base-frequency)
+
 *The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/2022-04-26-Anharmonic-Oscillator.ipynb>).*
  {% endraw %}
