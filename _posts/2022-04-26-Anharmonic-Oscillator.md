@@ -29,7 +29,7 @@ $$
 V(r) = D_e ( 1-e^{-a(r-r_e)} )^2
 $$
 
-which can be used as an approximate "interatomic interaction model for the potential energy of a diatomic molecule."  (Source: https://en.wikipedia.org/wiki/Morse_potential)
+which can be used as an approximate "interatomic interaction model for the potential energy of a diatomic molecule."  (Source: [Wikipedia](https://en.wikipedia.org/wiki/Morse_potential))
 
 Let's define it in `sympy`:
 
@@ -48,9 +48,19 @@ Using the first and second derivative for the harmonic approximation around $$r_
 
 
 ```python
-dr_V_morse_s = sp.diff(V_morse_s, r_s)
-dr2_V_morse_s = sp.diff(dr_V_morse_s, r_s)
-V_harm_s = V_morse_s.subs(r_s, re_s) + dr_V_morse_s.subs(r_s, re_s) * (r_s - re_s) + sp.Rational(1, 2) * dr2_V_morse_s.subs(r_s, re_s) * (r_s - re_s)**2
+def taylor_approx_2nd_order(function_s, variable_s, point_s):
+    """Do a Taylor approximation of `function_s` with regard to 
+    `variable_s` at `point_s'
+    """
+    df_s = sp.diff(function_s, variable_s)
+    d2f_s = sp.diff(df_s, variable_s)
+    dx = (variable_s - point_s)
+    approx_s = (function_s.subs(variable_s, point_s) 
+                + df_s.subs(variable_s, point_s) * dx 
+                + sp.Rational(1, 2) * d2f_s.subs(variable_s, point_s) * dx**2)
+    return approx_s
+
+V_harm_s = taylor_approx_2nd_order(V_morse_s, r_s, re_s)
 V_harm_s
 ```
 $$\displaystyle D_{e} a^{2} \left(r - r_{e}\right)^{2}$$  
@@ -106,7 +116,8 @@ We will integrate this with $$x(0)=0$$ and three different initial momenta $$p(0
 
 
 ```python
-F_f = sp.lambdify([r_s, re_s, De_s, a_s], -dr_V_morse_s)
+F_s = -sp.diff(V_morse_s, r_s) # Force
+F_f = sp.lambdify([r_s, re_s, De_s, a_s], F_s)
 
 t_eval = np.linspace(0, 30, 601)
 
@@ -115,6 +126,7 @@ def ds_dt(t, s):
     dx_dt = p / mass
     dp_dt = F_f(x, 0, De, a)/mass
     return np.array([dx_dt, dp_dt])
+
 
 sol_cl1 = integrate.solve_ivp(ds_dt, t_span = [t_eval[0], t_eval[-1]], y0 = [0.0, 3.5], t_eval = t_eval, method="RK23")
 sol_cl2 = integrate.solve_ivp(ds_dt, t_span = [t_eval[0], t_eval[-1]], y0 = [0.0, 2.5], t_eval = t_eval, method="RK23")
