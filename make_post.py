@@ -46,7 +46,7 @@ def change_image_links(image_base_path, txt):
         if line.startswith("![png]"):
             picture_name = line.split("/")[-1][:-1]
             out.append('{: style="text-align:center"}')
-            line = r'![png]({}_files/{}){{: width="90%"}}'.format(image_base_path, picture_name)
+            line = r'![png]({}_files/{})'.format(image_base_path, picture_name)
             out.append(line)
         else:
             out.append(line)
