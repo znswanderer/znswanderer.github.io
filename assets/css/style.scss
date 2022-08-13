@@ -1,0 +1,59 @@
+---
+---
+
+@import 'jekyll-theme-leap-day';
+//@import "rouge-base16-light";
+
+header {
+    background: #6e706b;
+    h1 {
+        color: gold;
+    }
+}
+
+#banner {
+    background: #gold;
+}
+
+body {
+    //font: unset;
+    //color: #000000;
+    font-size: medium;
+}
+
+.pager ul, pager li {  
+    list-style-image: unset;
+}
+
+.pagination a, .pagination span {
+    padding: 7px 18px;
+    border: 1px solid #eee;
+    margin-left: -2px;
+    margin-right: -2px;
+    background-color: #ffffff;
+    display: inline-block;
+  }
+
+.pagination a {    
+    &:hover {
+        background-color: #f1f1f1;
+        color: #333;
+    }
+ }
+
+.pagination {
+    text-align: center;
+ }
+
+ .next {
+    float: right;
+}
+
+@import 'base16.solarized.light.css';
+//@import 'igorpro.css';
+//@import 'gruvbox.light.css';
+//@import 'github.css';
+
+// code {
+//     background-color: unset;    
+// }

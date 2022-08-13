@@ -21,21 +21,29 @@
 title: Wald aus Zahlen
 email: znswanderer@icloud.com
 description: #>- # this means to ignore newlines until "baseurl:"
-  A blog about physics, programming and math.
+  physics, programming and math
 #baseurl: "" # the subpath of your site, e.g. /blog
 #url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
-# Build settings
-#theme: minima
-remote_theme: jekyll/minima
+# # Build settings
+# #theme: minima
+#remote_theme: jekyll/minima
+
+# plugins:
+#   - jekyll-feed
+
+remote_theme: pages-themes/leap-day@v0.2.0
+
+
+
 plugins:
-  - jekyll-feed
+- jekyll-remote-theme # add this line to the plugins list if you already have one
+- jekyll-paginate
 
+math_engine: mathjax
 
-#math_engine: mathjax
-
-kramdown:
-  math_engine: nil  # for katex (because kramdown defaults to mathjax)
+#kramdown:
+#  math_engine: nil  # for katex (because kramdown defaults to mathjax)
 
 
 show_excerpts: true
@@ -46,11 +54,12 @@ permalink: /:categories/:title/
 author:
   email: "znswanderer@icloud.com"  
 
+paginate: 10
+
 minima:
   social_links:
 #    twitter: en_znswanderer
     github:  znswanderer
-
 
 # Exclude from processing.
 # The following items will not be processed, by default.
