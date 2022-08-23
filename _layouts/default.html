@@ -23,8 +23,15 @@
       </header>
 
       <div id="banner">
+
         {%if page.url != '/' %}
-        <a href="{{ '/' | relative_url }}" class="homelink"><strong>Wald aus Zahlen</strong></a>
+        <div  class="homelink">
+            <a href="{{ '/' | relative_url }}"><strong>Home</strong></a>
+          {%if page.url != '/reference/' %}
+            &nbsp; &nbsp; &nbsp;
+            <a href="{{ '/reference' | relative_url }}"><strong>Reference Sheet</strong></a>
+          {% endif %}
+        </div>
         {% endif %}
         
         <!--<a href="{{ site.github.repository_url }}" class="button fork"><strong>View On GitHub</strong></a>-->

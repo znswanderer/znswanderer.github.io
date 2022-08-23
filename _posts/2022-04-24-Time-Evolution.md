@@ -122,7 +122,7 @@ plt.legend();
     
 {: style="text-align:center"}
 {% endraw %}
-![png]({{site.url}}/assets/images/2022-04-24-Time-Evolution_files/2022-04-24-Time-Evolution_10_0.png){: width="90%"}
+![Image]({{site.url}}/assets/images/2022-04-24-Time-Evolution_files/2022-04-24-Time-Evolution_10_0.png)
 {% raw %}
     
 
@@ -221,7 +221,7 @@ plt.legend();
     
 {: style="text-align:center"}
 {% endraw %}
-![png]({{site.url}}/assets/images/2022-04-24-Time-Evolution_files/2022-04-24-Time-Evolution_17_0.png){: width="90%"}
+![Image]({{site.url}}/assets/images/2022-04-24-Time-Evolution_files/2022-04-24-Time-Evolution_17_0.png)
 {% raw %}
     
 
@@ -346,7 +346,7 @@ plt.legend();
     
 {: style="text-align:center"}
 {% endraw %}
-![png]({{site.url}}/assets/images/2022-04-24-Time-Evolution_files/2022-04-24-Time-Evolution_27_0.png){: width="90%"}
+![Image]({{site.url}}/assets/images/2022-04-24-Time-Evolution_files/2022-04-24-Time-Evolution_27_0.png)
 {% raw %}
     
 

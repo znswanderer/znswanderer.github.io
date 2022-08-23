@@ -5,6 +5,7 @@
 command = r'jupyter nbconvert {} --to markdown --TagRemovePreprocessor.enabled=True --TagRemovePreprocessor.remove_cell_tags=[\"remove_cell\"]'
 
 import os
+from posixpath import split
 import sys
 import shutil
 from urllib.parse import quote
@@ -42,16 +43,25 @@ def change_image_links(image_base_path, txt):
     """
     print("change_image_links...")
     out = []
+    to_copy_images = []
     for line in txt.splitlines():
-        if line.startswith("![png]"):
-            picture_name = line.split("/")[-1][:-1]
+        if line.startswith("![png]") or line.startswith("![Image]"):
+            splits = line.split("/")
+            if len(splits) > 1:
+                picture_name = splits[-1][:-1]
+                if not image_base_path.split("/")[-1] in splits[-2]:
+                    to_copy_images.append(picture_name)                    
+            else:
+                picture_name = splits[0].split("(")[-1][:-1]
+                to_copy_images.append(picture_name)                    
+
             out.append('{: style="text-align:center"}')
-            line = r'![png]({}_files/{})'.format(image_base_path, picture_name)
+            line = r'![Image]({}_files/{})'.format(image_base_path, picture_name)
             out.append(line)
         else:
             out.append(line)
 
-    return "\n".join(out)
+    return "\n".join(out), to_copy_images
 
 
 STATE_DEFAULT = 'default'
@@ -183,8 +193,16 @@ def copy_videos(md_path, video_files):
         dst_img_path = os.path.join(IMAGES_PATH, bookname + "_files")
         print(dst_img_path)
         shutil.copy(os.path.join(dir_path, v_file), dst_img_path)
-
-        #shutil.copy(src, dst)
+        
+def copy_images(md_path, to_copy_images):
+    print("copy_images...", md_path)
+    dir_path, md_file_name = os.path.split(md_path)
+    bookname, _ = os.path.splitext(md_file_name)
+    for v_file in to_copy_images:
+        print("copying", v_file)
+        dst_img_path = os.path.join(IMAGES_PATH, bookname + "_files")
+        print(dst_img_path)
+        shutil.copy(os.path.join(dir_path, v_file), dst_img_path)
 
 
 def add_jupyter_link(md_name, txt):
@@ -212,7 +230,7 @@ def convert(notebook):
     txt = pacify_dollars(txt)
     #txt = remove_displaystyle(txt)
     txt = left_align_math_output(txt)
-    txt = change_image_links(image_base_path, txt)
+    txt, to_copy_images = change_image_links(image_base_path, txt)
     txt = add_jupyter_link(pure_bookname + ".ipynb", txt)
     txt = make_raw(txt)
     txt, video_files = fix_video(image_base_path, txt)
@@ -222,6 +240,8 @@ def convert(notebook):
 
     move_files(md_path)
     copy_videos(md_path, video_files)
+    if to_copy_images:
+        copy_images(md_path, to_copy_images)
 
 
 if __name__ == '__main__':
