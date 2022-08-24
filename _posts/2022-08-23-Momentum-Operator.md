@@ -149,11 +149,11 @@ $$\alpha \in \mathbb{R}$$, because the eigenvalues $$\lambda_p$$ of the Hermitia
 the eigenvectors of $$\hat p$$ are also eigenvectors of $$\hat U_{\Delta x}$$, so we have
 
 $$
-\hat U_{\Delta x} \vert p \rangle = \exp \left(i \Delta x \lambda_p / \hbar \right) \vert p \rangle
+\hat U_{\Delta x} \vert p \rangle = \exp \left(-i \Delta x \lambda_p / \hbar \right) \vert p \rangle
 = \lambda_U \vert p \rangle
 $$
 
-which gives $$\lambda_U = e^{i \Delta x \lambda_p / \hbar}$$.
+which gives $$\lambda_U = e^{-i \Delta x \lambda_p / \hbar}$$.
 
 The operators $$\hat U_{\Delta x}$$ form a [Lie group](https://en.wikipedia.org/wiki/Symmetry_in_quantum_mechanics#Overview_of_Lie_group_theory).
 Lie groups are continuous and a group parameter $$\zeta \in \mathbb{R}$$ defines the individual group element $$G(\zeta)$$. For the parameter $$\zeta = 0$$ the group element is the identitiy element, $$G(0) = 1$$.
