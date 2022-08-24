@@ -142,16 +142,18 @@ $$
 $$
 
 An operator with $$\hat A^{-1} = \hat A^\dagger$$ is called [*unitary*](https://en.wikipedia.org/wiki/Unitary_operator). 
-All eigenvalues of an unitary operator are purely imaginary, if $$\lambda_p$$ is 
-an eigenvalue of the momentum operator, $$\hat p \vert p \rangle = \lambda_p \vert p \rangle$$, we have 
 
+
+All eigenvalues of an *unitary* operator lie on the *unit* circle in the complex plane, that is $$\lambda_U = e^{i \alpha}$$ and
+$$\alpha \in \mathbb{R}$$, because the eigenvalues $$\lambda_p$$ of the Hermitian operator $$\hat p$$ are real and
+the eigenvectors of $$\hat p$$ are also eigenvectors of $$\hat U_{\Delta x}$$, so we have
 
 $$
 \hat U_{\Delta x} \vert p \rangle = \exp \left(i \Delta x \lambda_p / \hbar \right) \vert p \rangle
+= \lambda_U \vert p \rangle
 $$
 
-and as $$\lambda_p \in \mathbb{R}$$, because $$\hat p$$ is Hermitian, the eigenvalue $$\exp \left(i \Delta x \lambda_p / \hbar \right)$$
-is purely imaginary.
+which gives $$\lambda_U = e^{i \Delta x \lambda_p / \hbar}$$.
 
 The operators $$\hat U_{\Delta x}$$ form a [Lie group](https://en.wikipedia.org/wiki/Symmetry_in_quantum_mechanics#Overview_of_Lie_group_theory).
 Lie groups are continuous and a group parameter $$\zeta \in \mathbb{R}$$ defines the individual group element $$G(\zeta)$$. For the parameter $$\zeta = 0$$ the group element is the identitiy element, $$G(0) = 1$$.
