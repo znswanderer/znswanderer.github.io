@@ -73,7 +73,7 @@ $$
 ### Taylor series
 
 Having an operator as an argument for the exponential function might seem strange, but there are two ways 
-to look at this. First we know that the expansion of the exponential function is
+to look at this. First, we know that the expansion of the exponential function is
 
 $$
 \exp x = 1 + x + \frac{1}{2!} x^2 + \frac{1}{3!} x^3 + \dots
@@ -259,7 +259,7 @@ $$
 -i \hbar \frac{\partial}{\partial x} e^{ikx} = \hbar k e^{ikx} \, .
 $$
 
-If we use periodic boundary conditions, $$\psi(x) = \psi(x + L)$$, the values for $$k$$ a discrete: $$k = \pm 2 \pi n / L$$.
+If we use periodic boundary conditions, $$\psi(x) = \psi(x + L)$$, the values for $$k$$ are discrete: $$k = \pm 2 \pi n / L$$.
 This disceteness is not because of the discretization of space, but because of the periodicity. The
 values for $$n$$ are not bounded, but now because of the discretization of space, there are only $$N$$ linear indepentent 
 eigenvectors. We will choose the eigenvectors for $$n= -\frac{N}{2}, -\frac{N}{2} +1, \dots , \frac{N}{2} -1$$. 
