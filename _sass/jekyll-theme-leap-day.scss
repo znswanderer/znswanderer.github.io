@@ -61,6 +61,7 @@ a small {
 
 ul{
   list-style-image:url('../images/bullet.png');
+  padding-left: 0px;
 }
 
 strong {
@@ -74,6 +75,21 @@ strong {
   margin:0 auto;
   position:relative;
 }
+
+
+
+h2.tags-item-label {
+  //padding-top: 30px;
+  margin: 0px;
+  margin-top: 30px;
+}
+
+
+// .post-list {
+//   ul{
+//     padding-left: 0px;
+//   }
+// }
 
 section img {
   max-width: 100%;
