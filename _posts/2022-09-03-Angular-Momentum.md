@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "The Angular Momentum as Generator of Rotation"
-date:   2022-09-01
+date:   2022-09-05
 categories: Physics
 tags:   [Quantum Mechanics, Angular Momentum]
 ---
