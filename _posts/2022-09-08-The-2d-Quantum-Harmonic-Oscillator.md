@@ -1,12 +1,19 @@
 ---
 layout: post
 title:  "The Two-dimensional Quantum Harmonic Oscillator"
-date:   2022-09-09
+date:   2022-09-10
 categories: Physics
 tags:   [Quantum Mechanics, 2d Systems, Harmonic Oscillator, Dynamics, Angular Momentum]
 ---
 {% raw %}
-Introduction with a pretty picture
+Today we will discuss the two dimensional quantum harmonic oscillator. We will see how the angular momentum can be
+used to find a complete eigenbasis. And in the end we will make a nice animation of two wave packets in the
+harmonic potential for which this picture is a short preview:
+
+{: style="text-align:center"}
+{% endraw %}
+![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2d_harm2.png)
+{% raw %}
 
 {% endraw %}
 <!--more-->
@@ -20,7 +27,7 @@ $$
 \hat H = \frac{1}{2m} \left( \hat p_x^2 + \hat p_y^2 \right)+ \frac{1}{2} m \omega^2 \left( \hat x^2 + \hat y^2 \right)
 $$
 
-Here we modelling $$x, y \in [-\text{Length}/2, \text{Length}/2]$$, only wave function that are more or less concentrated in this 
+Here we restrict $$x, y \in [-\text{Length}/2, \text{Length}/2]$$, only wave function that are more or less concentrated in the middle of this 
 region can be described well enough with this finite numerical model. That means, we are focussing on low energy states.
 
 The general form of constructing 2d operators with the Kronecker product was discussed [previously](https://znswanderer.github.io/physics/2d-Quantum-Systems/), so it is quite straightforward to construct the Hamiltionian as: 
@@ -200,6 +207,8 @@ res_HO_1d = calc_eigs(HO_1d, k=2)
 psi0, psi1 = res_HO_1d.eigv.T
 ```
 
+Let's plot the first two eigenstates:
+
 
 ```python
 plt.plot(HO_1d.x, psi0, label=r"$\psi_0$")
@@ -211,12 +220,12 @@ plt.legend();
     
 {: style="text-align:center"}
 {% endraw %}
-![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_14_0.png)
+![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_15_0.png)
 {% raw %}
     
 
 
-We can combine them to an eigenstate for the 2d system, $$\vert \psi \rangle = \vert 0 \rangle \otimes \vert 1 \rangle$$:
+We can combine them to form an eigenstate for the 2d system, $$\vert \psi \rangle = \vert 0 \rangle \otimes \vert 1 \rangle$$:
 
 
 ```python
@@ -239,7 +248,7 @@ plt.rcParams['axes.grid'] = True
     
 {: style="text-align:center"}
 {% endraw %}
-![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_16_0.png)
+![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_17_0.png)
 {% raw %}
     
 
@@ -269,7 +278,7 @@ sol = integrate.solve_ivp(lambda phi, psi: (-1j / HO_2d.hbar) * (L_op @ psi),
                           t_span = [phi_eval[0], phi_eval[-1]], y0 = psi.astype(complex) , t_eval = phi_eval, method="RK23")
 ```
 
-The rotated states for $$\Delta \varphi \in \{ \pi / 2, \pi, 3 \pi/2 \}$$ are:
+The rotated states for $$\Delta \varphi \in \{0, \pi / 2, \pi, 3 \pi/2 \}$$ are:
 
 
 ```python
@@ -285,12 +294,14 @@ for n in range(4):
     
 {: style="text-align:center"}
 {% endraw %}
-![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_21_0.png)
+![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_22_0.png)
 {% raw %}
     
 
 
-So we find: 
+So we find, that the two linear independent eigenvectors $$\vert 0, 1 \rangle$$ and $$\vert 1, 0 \rangle$$ 
+are just rotations of one another. These is easy to understand as a rotation by $$\pi /2$$ just switches
+the $$x$$ and $$y$$ axis:
 
 $$
 \begin{align}
@@ -305,8 +316,10 @@ $$
 \hat R_{\pi /2} = e^{-i \pi \hat L / 2 \hbar} \, .
 $$
 
-So these eigenstates of $$\hat H$$ are clearly not eigenstates of the angular momentum operator. But using these
-eigenstates we can construct linear combination , that are. These combinations are:
+So these eigenstates of $$\hat H$$ are clearly not eigenstates of the angular momentum operator as applying
+the angular momentum operator via the rotation operator changes a state, which would be not the
+case if these states were eigenstates. 
+But using these states we can construct linear combinations, that are eigenstates. These combinations are:
 
 $$
 \begin{align}
@@ -315,7 +328,8 @@ $$
 \end{align}
 $$
 
-The two $$\hat L$$ eigenstates in python:
+These two are $$\hat L$$ eigenstates, which can be checked with python. First the construction
+from the 1d eigenstates:
 
 
 ```python
@@ -323,7 +337,7 @@ psi_plus = (np.kron(psi0, psi1) - 1j * np.kron(psi1, psi0)) / np.sqrt(2)
 psi_minus = (np.kron(psi0, psi1) + 1j * np.kron(psi1, psi0)) / np.sqrt(2)
 ```
 
-And a quick check, for the eigenvalues:
+and then a quick check, for the eigenvalues:
 
 
 ```python
@@ -349,20 +363,20 @@ im = plt.imshow(np.abs(psi_plus_2d), extent=HO_2d.extent, origin='lower')
     
 {: style="text-align:center"}
 {% endraw %}
-![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_28_0.png)
+![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_29_0.png)
 {% raw %}
     
 
 
 ## Finding the complete eigenbasis for $$\hat H$$ and $$\hat L$$
 
-With this we see, that using both $$\hat H$$ and $$\hat L$$ we have a 
+With this we see, that using both $$\hat H$$ and $$\hat L$$ we can construct a 
 [complete set of commuting observables](https://en.wikipedia.org/wiki/Complete_set_of_commuting_observables).
 This way we can resolve the degeneracy of the energy eigenvalues $$n$$ by specifying the angular
 momentum eigenvalue $$m$$, so a basis state can be identified by the two quantum numbers $$n$$ and $$m$$.
 
-To do this we can use the same trick, we used [previously](https://znswanderer.github.io/physics/2d-Quantum-Systems/) and
-introduce an artificial Hamiltonian, that includes the angular momentum operator as a non-hermitian addition:
+To do this we use the same trick, we used [previously](https://znswanderer.github.io/physics/2d-Quantum-Systems/) and
+introduce an artificial Hamiltonian, that includes the angular momentum operator as an artificial non-hermitian addition:
 
 
 ```python
@@ -390,10 +404,12 @@ plt.xlabel("$m$");
     
 {: style="text-align:center"}
 {% endraw %}
-![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_34_0.png)
+![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_35_0.png)
 {% raw %}
     
 
+
+Each of these plots identifies a unique basis state for the two quantum numbers $$n$$ and $$m$$.
 
 Now, let's plot the eigenstates for $$n \leq 3$$:
 
@@ -429,7 +445,7 @@ fig.tight_layout()
     
 {: style="text-align:center"}
 {% endraw %}
-![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_36_0.png)
+![Image]({{site.url}}/assets/images/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_files/2022-09-08-The-2d-Quantum-Harmonic-Oscillator_37_0.png)
 {% raw %}
     
 
@@ -442,25 +458,28 @@ counts the number of nodes in the angular direction.
 
 ## Wave packets in motion
 
-Just for some crude resemblance of fun we can now simulate the motion of one or two wave packets in the 2d
+As a last part of this blog post, we can now simulate the motion of wave packets in the 2d
 harmonic oscillator.
 
-We start with the ground state as the basis for the wave packet:
+We start with the ground state as the basis for a wave packet, because the ground state has nice gaussian form:
 
 
 ```python
 psi0 = eigv.T[0]
 ```
 
+This wave packet will be moved from the center and additionally we will give it a little boost, so
+that we can observe some movement for $$\vert \psi \vert^2$$.
+The operator for (spatial) translation was described [here](https://znswanderer.github.io/physics/Momentum-Operator/) and
+the boost operator [here](https://znswanderer.github.io/physics/Time-Evolution/). The translation in $$x$$-direction 
+and the boost in the $$p_y$$ momentum is done via the Kronecker product:
+
 
 ```python
 def boost_dpx(box, dp):
     boost_1d = sparse.diags([np.exp(1j * box.x * dp / box.hbar)], [0]) 
     return sparse.kron(boost_1d, box.One)
-```
 
-
-```python
 def translate_dy(box, dy):
     ns = range((-box.N)//2, box.N//2)
     ks = [(2 * np.pi / box.Length) * n for n in ns]
@@ -470,6 +489,8 @@ def translate_dy(box, dy):
     U_1d = sparse.diags(np.exp(-1j * dy * np.array(ks)))
     return sparse.kron(box.One, Q @ U_1d @ Q_inv)
 ```
+
+Applying this to the ground state
 
 
 ```python
@@ -486,43 +507,7 @@ sol = integrate.solve_ivp(lambda t, psi: (-1j / HO_2d.hbar) * (HO_2d.H @ psi),
 # takes approx 2 minutes on a 2019 macbook pro
 ```
 
-
-```python
-from matplotlib import animation
-
-class WaveAnimation:
-    def __init__(self, psi_t, t_vec, box, cmap='gnuplot2'):
-        self.box = box
-        self.psi_t = psi_t
-        self.t_vec = t_vec
-        self.fig = plt.figure(figsize=(6,4))
-        self.ax1 = ax1 = plt.subplot(1,1,1)
-        self.cmap = cmap
-        psi_2d = np.reshape(psi_t[:,0], (box.N, box.N), order="F")
-        plt.rcParams['axes.grid'] = False 
-        self.image = ax1.imshow(np.abs(psi_2d)**2, extent=box.extent, origin='lower', cmap=self.cmap)
-
-    def init_anmimation(self):
-        psi_2d = np.reshape(self.psi_t[:,0], (self.box.N, self.box.N), order="F")
-        self.image.set_data(np.abs(psi_2d)**2)
-        return self.image,
-
-    def get_frame(self, i):
-        psi_2d = np.reshape(self.psi_t[:,i], (self.box.N, self.box.N), order="F")
-        self.image.set_data(np.abs(psi_2d)**2)
-        return self.image,
-    
-    def animation(self):
-        anim = animation.FuncAnimation(self.fig, self.get_frame, init_func=self.init_anmimation,
-                                       frames=len(self.t_vec), interval=50, blit=True)
-        return anim
-    
-    def save_mp4(self, filename):
-        ffwriter = animation.FFMpegWriter(fps=20, extra_args=['-vcodec', 'libx264'])
-        anim = self.animation()
-        anim.save(filename, dpi=300, writer=ffwriter)
-        plt.close()   # to prevent the last frame from showing in notebook
-```
+And then generate the animation. (The class WaveAnimation can be found in the notebook)
 
 
 ```python
@@ -540,6 +525,9 @@ Video('one_packet.mp4', width=600)
     </video>
 
 
+
+So this is pretty much the same behaviour we would expect from a classical particle in a harmonic potential.
+But what happens if we put two wave packets (not two particles, **it is still one particle** as long as the Hamiltonian models a particle at all) in the same harmonic potential? Just two boring rotating and oscillating bundles? No! We get nice interferences as soon as the wave packets overlap!
 
 
 ```python
@@ -572,10 +560,9 @@ Video('two_packets.mp4', width=600)
 
 
 
-
-```python
-
-```
+It's quite fascinating how the interference pattern emerges once the two wave packets come close to each other.
+We see a bridge between the two packets outside of the "normal" size of the packets, but also an area of negative 
+interference. This is a true quantum phenomenon.
 
 *The original Jupyter notebook can be found [here](<https://github.com/znswanderer/znswanderer.github.io/blob/main/_jupyter/2022-09-08-The-2d-Quantum-Harmonic-Oscillator.ipynb>).*
  {% endraw %}
