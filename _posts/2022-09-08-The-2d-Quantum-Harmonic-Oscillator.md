@@ -497,7 +497,7 @@ Applying this to the ground state
 psi_ = boost_dpx(HO_2d, 6) @ translate_dy(HO_2d, 2) @ psi0
 ```
 
-Now do the well known time integration
+Now do the well known time [integration](https://znswanderer.github.io/reference#time-integration)
 
 
 ```python
