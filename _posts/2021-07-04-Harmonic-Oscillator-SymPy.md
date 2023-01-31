@@ -8,7 +8,6 @@ tags:   [ODE, SymPy, Quantum Mechanics, Harmonic Oscillator]
 {% raw %}
 In the last post I described how to use SymPy to analytically solve the Schrödinger equation of the free particle and the particle in the infinite potential box. But these were really quite simple problems. This time I would like to consider one of the most important example systems of quantum mechanics, namely the *quantum harmonic oscillator*.
 
-
 {% endraw %}
 <!--more-->
 {% raw %}

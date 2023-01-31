@@ -1,15 +1,9 @@
 ---
-
 layout: post
-
 title:  "Solving the Schrödinger Equation with SymPy"
-
 date:   2021-06-27
-
 categories: Physics
-
 tags:   [ODE, SymPy, Quantum Mechanics, Free Particle, Particle in a Box, SymPy solvers]
-
 ---
 {% raw %}
 Today I will briefly show how to use [SymPy][sympy] for solving the Schrödinger equation.

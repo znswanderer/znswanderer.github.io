@@ -1,9 +1,9 @@
 ---
 title:  "Reference sheet"
-layout: home
+layout: default
 ---
 
-## Momentum Operator
+# Momentum Operator
 
 The operator for the linear momentum in position basis for the $$x$$-axis is 
 
@@ -15,7 +15,7 @@ $$
 The momentum operator is the [generator of spatial translation]({{site.url}}/physics/Momentum-Operator/).
 
 
-## Time integration
+# Time integration
 
 The time-dependent Schrödinger equation is
 
