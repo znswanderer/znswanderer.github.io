@@ -11,7 +11,7 @@ I will explore the realm of quantum mechanics with python.
 
 I can also be found on
 
-* [Mastodon](https://mastodon.lol/@znswanderer)
+* [Mastodon](https://strangeobject.space/@znswanderer)
 * [Twitter](https://twitter.com/znswanderer)
 * [Github](https://github.com/znswanderer)
 
